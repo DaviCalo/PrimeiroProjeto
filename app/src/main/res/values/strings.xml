@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PrimeiroProjeto</string>
+
+    <!-- SIGN SCREEN STRINGS -->
+    <string name="sign_screen_topbar_name">Sign Up</string>
+    <string name="sign_screen_topbar_login">Login</string>
+    <string name="sign_screen_check_box">I would like to receive your newsletter and other promotional information.</string>
 </resources>
