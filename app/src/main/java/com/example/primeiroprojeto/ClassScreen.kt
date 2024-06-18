@@ -155,10 +155,10 @@ fun ClassesScreenBottomBar(){
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularBottomButton(greenPrimary)
+                CircularBottomButton(greenPrimary)
             repeat(4){
                 CircularBottomButton(inputBorderColor)
-            } //pode usar isso para repetir algo varias vezes
+        } //pode usar isso para repetir algo varias vezes
 
 
         }

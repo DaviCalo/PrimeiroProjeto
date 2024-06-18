@@ -237,7 +237,7 @@ fun SignUpButton() {
                 containerColor = greenPrimary,
                 contentColor = Color.White
             ),
-        ) {
+            ) {
             Text(text = stringResource(id = R.string.sign_screen_topbar_name))
         }
         ClickableText(
@@ -254,7 +254,7 @@ fun SignUpButton() {
                 textAlign = TextAlign.Center
             )
         ) {
-
+            
         }
     }
 }
