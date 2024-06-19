@@ -19,6 +19,8 @@
     <string name="profile_screen_topbar_settings">Settings</string>
     <string name="profile_screen_topbar_name">Profile</string>
     <string name="profile_screen_topbar_logout">Logout</string>
+    <string name="profile_screen_image_name">Victoria Robertson</string>
+    <string name="profile_screen_image_mantra">A mantra goes here</string>
 
 
 

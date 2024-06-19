@@ -240,22 +240,6 @@ fun SignUpButton() {
         ) {
             Text(text = stringResource(id = R.string.sign_screen_topbar_name))
         }
-        ClickableText(
-            modifier = Modifier
-                .padding(bottom = 10.dp)
-                .fillMaxWidth(),
-            text = AnnotatedString(
-                stringResource(
-                    id = R.string.sign_screen_lost)
-            ),
-            style = TextStyle(
-                color = greenPrimary,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center
-            )
-        ) {
-
-        }
     }
 }
 

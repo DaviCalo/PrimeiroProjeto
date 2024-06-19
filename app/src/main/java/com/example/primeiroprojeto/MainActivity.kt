@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PrimeiroProjetoTheme {
-                ClassesScreen()
+                ProfileScreen()
             }
         }
     }
