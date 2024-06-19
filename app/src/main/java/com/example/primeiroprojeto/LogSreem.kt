@@ -46,8 +46,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
+
 @Composable
-fun  LogScreen(OnNextTela: () -> Unit){
+fun  LogScreen(OnNextTela: () -> Unit, viewModel: ViewModelPP){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier
@@ -60,42 +61,48 @@ fun  LogScreen(OnNextTela: () -> Unit){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Log in", fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp)
-        Forms(OnNextTela)
+        Forms(OnNextTela, viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms(OnNextTela: () -> Unit){
+fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
     var textoEmail by remember {
         mutableStateOf("")
     }
     var textoPassword by remember {
         mutableStateOf("")
     }
+
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
+
     Column(
-        Modifier.fillMaxWidth().fillMaxHeight(),
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
-            Modifier.fillMaxWidth().padding(20.dp,25.dp,20.dp,0.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(20.dp, 25.dp, 20.dp, 0.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10),
-                value = textoEmail,
+                value = viewModel.LogEmail.value,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color(0xffE8E8E8),
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
                 singleLine = true,
-                onValueChange = { textoEmail = it },
+                onValueChange = { viewModel.changeEmail(it) },
                 label = { Text("Email",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD)) }
             )
             OutlinedTextField(
@@ -114,9 +121,9 @@ fun Forms(OnNextTela: () -> Unit){
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
-                value = textoPassword,
+                value = viewModel.LogPassword.value,
                 singleLine = true,
-                onValueChange = { textoPassword = it },
+                onValueChange = { viewModel.changePassword(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done

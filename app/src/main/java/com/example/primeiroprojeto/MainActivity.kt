@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.MaterialTheme
@@ -23,33 +24,37 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PrimeiroProjetoTheme {
-                App()
+                val viewModel: ViewModelPP by viewModels()
+                App(viewModel = viewModel)
             }
         }
     }
 }
 
+//val viewModel: TesteViewModel by viewModels()
+//test(viewModel = viewModel)
 @Composable
-fun App() {
+fun App(viewModel: ViewModelPP) {
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.onSurface
     ){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "LogScreen") {
+        NavHost(navController = navController, startDestination = "CursoScreen") {
             composable("LogScreen") {
                 LogScreen(
                     OnNextTela = {
                         navController.navigate("CursoScreen")
-                    }
+                    }, viewModel
                 )
             }
+
             composable("SignScreen") {
                 SignScreen()
             }
 
             composable("CursoScreen"){
-                CursosScreem()
+                CursosScreem(viewModel)
             }
 
             composable("ChatScreen"){

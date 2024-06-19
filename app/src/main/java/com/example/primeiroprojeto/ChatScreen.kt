@@ -22,6 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
@@ -30,7 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 
 @Composable
 fun ChatScreen(){
@@ -116,7 +119,7 @@ fun messageCardAnother(Message: String){
 
 @Composable
 fun inputScreenBottomBar(){
-    var asd = ""
+    var asd by remember { mutableStateOf("")}
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row {
         OutlinedTextField(

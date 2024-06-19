@@ -1,12 +1,6 @@
 package com.example.primeiroprojeto
 
 
-import android.os.Bundle
-import android.preference.PreferenceActivity.Header
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,30 +25,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
 
 @Composable
-fun CursosScreem(){
+fun CursosScreem(viewModel: ViewModelPP){
     Scaffold(
         topBar = { Header("Cursos") },
         bottomBar = { ClassesScreenBottomBar() },
@@ -66,7 +48,7 @@ fun CursosScreem(){
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            inputSearch()
+            inputSearch(viewModel)
             containerCursos()
             Imas()
         }
@@ -101,8 +83,8 @@ fun Header(Title: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun inputSearch(){
-    var textSearch by remember { mutableStateOf("")}
+fun inputSearch(viewModel: ViewModelPP){
+//    var textSearch by remember { mutableStateOf("")}
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
     Row(
@@ -117,13 +99,13 @@ fun inputSearch(){
                 .fillMaxWidth()
                 .padding(15.dp, 0.dp),
             shape = RoundedCornerShape(50),
-            value = textSearch,
+            value =  viewModel.Search.value,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = Color(0xffE8E8E8),
                 focusedBorderColor = Color(0xff5DB075),
                 containerColor = Color(0xffF6F6F6),
             ),
-            onValueChange = { textSearch = it },
+            onValueChange = { viewModel.changeSearch(it) },
             singleLine = true,
             label = { Text("Search",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD))}
         )
@@ -187,7 +169,7 @@ fun Imas(){
             Box(
                 modifier = with (Modifier){
                     height(227.dp)
-                        .padding(0.dp,15.dp)
+                        .padding(0.dp, 15.dp)
                         .width(357.dp)
                         .clip(RoundedCornerShape(30.dp))
                         .background(Color.Green)
@@ -197,11 +179,11 @@ fun Imas(){
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun aasd(){
-    CursosScreem()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun aasd(){
+//    CursosScreem()
+//}
 
 @Composable
 fun ClassesScreenBottomBar(){
@@ -232,8 +214,7 @@ fun ClassesScreenBottomBar(){
 fun CircularBottomButton(color: Color){
     Button(
         onClick = {/*TODO*/},
-        modifier = Modifier
-            .size(50.dp),
+        modifier = Modifier.size(50.dp),
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(containerColor = color)
     ){
