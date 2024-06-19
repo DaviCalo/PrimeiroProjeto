@@ -81,7 +81,7 @@ fun Header(Title: String){
         Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(0.dp, 10.dp, 0.dp, 0.dp),
+            .padding(0.dp, 25.dp, 0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

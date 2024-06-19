@@ -39,15 +39,26 @@ fun App() {
         NavHost(navController = navController, startDestination = "LogScreen") {
             composable("LogScreen") {
                 LogScreen(
-
+                    OnNextTela = {
+                        navController.navigate("CursoScreen")
+                    }
                 )
             }
-            composable("SignScreen"){
-                SignScreen(
+            composable("SignScreen") {
+                SignScreen()
+            }
 
-                )
+            composable("CursoScreen"){
+                CursosScreem()
+            }
+
+            composable("ChatScreen"){
+                ChatScreen()
+            }
+
+            composable("CongratulationsScreen"){
+                CongratulationsScreen()
             }
         }
     }
-
 }

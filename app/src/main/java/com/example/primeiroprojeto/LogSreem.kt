@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 @Composable
-fun  LogScreen(){
+fun  LogScreen(OnNextTela: () -> Unit){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier
@@ -60,13 +60,13 @@ fun  LogScreen(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Log in", fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp)
-        Forms()
+        Forms(OnNextTela)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms(){
+fun Forms(OnNextTela: () -> Unit){
     var textoEmail by remember {
         mutableStateOf("")
     }
@@ -131,7 +131,7 @@ fun Forms(){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { OnNextTela() },
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -154,8 +154,8 @@ fun Forms(){
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun asd(){
-    LogScreen()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun asd(){
+//    LogScreen(OnNextTela)
+//}
