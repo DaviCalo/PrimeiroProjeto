@@ -288,7 +288,7 @@ fun PostProfile(){
     }
 }
 
-//TENTATIVAS DE SWITCH ---------------------------------------------------------------------------------------------------
+//TENTATIVAS DE SWITCH TODO: REMOVE RIPPLE EFFECTS FROM BUTTONS
 @Composable
 fun DoubleSwitchButton(){
     var selectedIndex by remember {
@@ -297,8 +297,10 @@ fun DoubleSwitchButton(){
 
     Row(
         modifier = Modifier
-            .padding(16.dp)
-            .border(1.dp, color = inputBorderColor, RoundedCornerShape(50)),
+            .padding(start = 8.dp, end= 8.dp, top = 16.dp, bottom =  16.dp)
+            .background(inputBackgroundColor, RoundedCornerShape(50))
+            .border(1.dp, color = inputBorderColor, RoundedCornerShape(50))
+
     ){
         Button(
             onClick = {selectedIndex = 0},
@@ -307,7 +309,8 @@ fun DoubleSwitchButton(){
                 containerColor = if (selectedIndex == 0) MaterialTheme.colorScheme.surface else inputBackgroundColor,
                 contentColor = if (selectedIndex == 0) greenPrimary else grayPrimary,
             ),
-            shape = RoundedCornerShape(50)
+            shape = RoundedCornerShape(50),
+            elevation = ButtonDefaults.elevatedButtonElevation(0.dp)
         ){
             Text(text = "Cursos")
         }
@@ -319,9 +322,10 @@ fun DoubleSwitchButton(){
                 containerColor = if (selectedIndex == 1) MaterialTheme.colorScheme.surface else inputBackgroundColor,
                 contentColor = if (selectedIndex == 1) greenPrimary else grayPrimary,
             ),
-            shape = RoundedCornerShape(50)
+            shape = RoundedCornerShape(50),
+            elevation = ButtonDefaults.elevatedButtonElevation(0.dp)
         ){
-            Text(text = "Aulas")
+            Text(text = "Certificados")
         }
     }
 
