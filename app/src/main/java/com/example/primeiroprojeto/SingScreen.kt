@@ -1,8 +1,7 @@
 package com.example.primeiroprojeto
 
-import ViewModelSign
+import com.example.primeiroprojeto.ViewModels.ViewModelSign
 import android.annotation.SuppressLint
-import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,7 +47,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
@@ -236,7 +234,7 @@ fun CustomSignInputPassword() {
             }
         },
         visualTransformation = if (passwordVisible.passwordVisibleCheck.value) VisualTransformation.None else PasswordVisualTransformation(),
-        )
+    )
 }
 
 @Composable

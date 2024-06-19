@@ -1,6 +1,6 @@
 package com.example.primeiroprojeto
 
-import ViewModelClass
+import com.example.primeiroprojeto.ViewModels.ViewModelClass
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

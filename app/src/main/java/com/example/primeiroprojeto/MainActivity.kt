@@ -1,10 +1,10 @@
 package com.example.primeiroprojeto
 
-import ViewModelSign
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,34 +22,55 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PrimeiroProjetoTheme {
-                //SignScreen()
-                ProfileScreen()
-                //ClassesScreen()
+                App()
             }
         }
     }
 }
 
+//val viewModel: TesteViewModel by viewModels()
+//test(viewModel = viewModel)
 @Composable
-fun App(viewModel: ViewModelSign) {
-    viewModel.count.value
+fun App() {
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.onSurface
     ){
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "LogScreen") {
-            /*
             composable("LogScreen") {
                 LogScreen(
+                    onScreenCursos = {
+                        navController.navigate("CursoScreen")
+                    })
+            }
 
+            composable("SignScreen") {
+                SignScreen()
+            }
+
+            composable("CursoScreen"){
+                CursosScreem(
+                    onScreenSheet = {navController.navigate(("Sheet"))},
+                    onScreenChat =  {navController.navigate(("ChatScreen"))},
+                    onScreenProfile = {}
                 )
             }
-            */
-            composable("SignScreen"){
-                SignScreen()
+//            onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit
+            composable("ChatScreen"){
+                ChatScreen(
+                    onScreenCurso = {navController.navigate(("CursoScreen"))},
+                    onScreenSheet = {navController.navigate(("Sheet"))},
+                    onScreenProfile = {navController.navigate(("CongratulationsScreen"))})
+            }
+
+            composable("CongratulationsScreen"){
+                CongratulationsScreen()
+            }
+
+            composable("Sheet"){
+                BottomSheet()
             }
         }
     }
-
 }
