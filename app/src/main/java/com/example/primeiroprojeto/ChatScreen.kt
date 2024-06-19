@@ -2,6 +2,7 @@ package com.example.primeiroprojeto
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +40,7 @@ import androidx.compose.ui.unit.sp
 fun ChatScreen(){
     Scaffold(
     topBar = { Header("Suporte") },
-    bottomBar = { inputScreenBottomBar() },
+    bottomBar = { InputScreenBottomBar() },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -47,27 +48,27 @@ fun ChatScreen(){
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            messagesComposable()
+            MessagesComposable()
         }
     }
 }
 
 @Composable
-fun messagesComposable(){
+fun MessagesComposable(){
     Column(
         Modifier.padding(20.dp)
     ) {
         repeat(2){
-            messageCard("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+            MessageCard("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
         }
         repeat(2){
-            messageCardAnother("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+            MessageCardAnother("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
         }
     }
 }
 
 @Composable
-fun messageCard(Message: String){
+fun MessageCard(message: String){
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.Medium))
     Column(
         Modifier.fillMaxWidth()
@@ -83,17 +84,17 @@ fun messageCard(Message: String){
                 bottomStart = 48f ,
                 bottomEnd = 0f)
             )
-            .background(Color(0xff5DB075))
+            .background(Color(0xff5db075))
             .width(265.dp)
             .padding(15.dp)
         ) {
-            Text(text = Message, fontSize = 15.sp, fontFamily = interMedium, color = Color(0xFFFFFFFF))
+            Text(text = message, fontSize = 15.sp, fontFamily = interMedium, color = Color(0xFFFFFFFF))
         }
     }
 }
 
 @Composable
-fun messageCardAnother(Message: String){
+fun MessageCardAnother(message: String){
         val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.Medium))
         Column(
             Modifier.fillMaxWidth()
@@ -109,16 +110,17 @@ fun messageCardAnother(Message: String){
                     bottomStart = 0f ,
                     bottomEnd = 48f)
             )
-            .background(Color(0xffC4C4C4))
+            .border(2.dp, Color(0xffeeeeee),RoundedCornerShape(topStart = 48f, topEnd = 48f, bottomStart = 0f , bottomEnd = 48f))
+            .background(Color(0xfff6f6f6))
             .width(265.dp)
             .padding(15.dp)
         ) {
-            Text(text = Message, fontSize = 15.sp, fontFamily = interMedium, color = Color(0xFF000000))
+            Text(text = message, fontSize = 15.sp, fontFamily = interMedium, color = Color(0xFF000000))
         }
 }}
 
 @Composable
-fun inputScreenBottomBar(){
+fun InputScreenBottomBar(){
     var asd by remember { mutableStateOf("")}
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row {
@@ -153,6 +155,6 @@ fun inputScreenBottomBar(){
 
 @Preview
 @Composable
-fun asdasd(){
+fun Asdasd(){
     ChatScreen()
 }

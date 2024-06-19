@@ -9,24 +9,23 @@ class ViewModelPP : ViewModel() {
     private val _LogEmail = mutableStateOf("")
     private val _LogPsssword = mutableStateOf("")
 
-    val LogEmail: MutableState<String> = _LogEmail
-    val LogPassword: MutableState<String> = _LogPsssword
+    val logEmail: MutableState<String> = _LogEmail
+    val logPassword: MutableState<String> = _LogPsssword
 
     fun changeEmail(email: String){
-        LogEmail.value = email
+        logEmail.value = email
     }
     fun changePassword(password: String){
-        LogPassword.value = password
+        logPassword.value = password
     }
 
 
 
     private val  _Search = mutableStateOf("")
-
-    val Search: MutableState<String> = _Search
+    val search: MutableState<String> = _Search
 
 
     fun changeSearch(name: String){
-        Search.value = name
+        search.value = name
     }
 }

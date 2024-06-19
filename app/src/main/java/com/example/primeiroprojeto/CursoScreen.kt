@@ -48,15 +48,15 @@ fun CursosScreem(viewModel: ViewModelPP){
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            inputSearch(viewModel)
-            containerCursos()
+            InputSearch(viewModel)
+            ContainerCursos()
             Imas()
         }
     }
 }
 
 @Composable
-fun Header(Title: String){
+fun Header(title: String){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row(
@@ -67,14 +67,14 @@ fun Header(Title: String){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xfffffff))
+        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffffffff))
         ) {
             Text(text = "Back", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
         }
 
-        Text(text = Title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp )
+        Text(text = title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp )
 
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xfffffff))
+        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffffffff))
         ) {
             Text(text = "Filter", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
         }
@@ -83,7 +83,7 @@ fun Header(Title: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun inputSearch(viewModel: ViewModelPP){
+fun InputSearch(viewModel: ViewModelPP){
 //    var textSearch by remember { mutableStateOf("")}
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
@@ -99,7 +99,7 @@ fun inputSearch(viewModel: ViewModelPP){
                 .fillMaxWidth()
                 .padding(15.dp, 0.dp),
             shape = RoundedCornerShape(50),
-            value =  viewModel.Search.value,
+            value =  viewModel.search.value,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = Color(0xffE8E8E8),
                 focusedBorderColor = Color(0xff5DB075),
@@ -113,19 +113,19 @@ fun inputSearch(viewModel: ViewModelPP){
 }
 
 @Composable
-fun containerCursos(){
-    var nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
+fun ContainerCursos(){
+    val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
     Column(
         Modifier.fillMaxWidth()
     ) {
         for (name in nameCursos){
-            cardCursos(name)
+            CardCursos(name)
         }
     }
 }
 
 @Composable
-fun cardCursos(nameCurso: String){
+fun CardCursos(nameCurso: String){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row(

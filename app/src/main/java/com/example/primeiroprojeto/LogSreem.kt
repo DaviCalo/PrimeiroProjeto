@@ -1,9 +1,5 @@
 package com.example.primeiroprojeto
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,26 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialogDefaults.containerColor
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,13 +28,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 
 @Composable
-fun  LogScreen(OnNextTela: () -> Unit, viewModel: ViewModelPP){
+fun  LogScreen(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier
@@ -61,19 +45,13 @@ fun  LogScreen(OnNextTela: () -> Unit, viewModel: ViewModelPP){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Log in", fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp)
-        Forms(OnNextTela, viewModel)
+        Forms(onScreenCursos, viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
-    var textoEmail by remember {
-        mutableStateOf("")
-    }
-    var textoPassword by remember {
-        mutableStateOf("")
-    }
+fun Forms(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
 
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
@@ -95,7 +73,7 @@ fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10),
-                value = viewModel.LogEmail.value,
+                value = viewModel.logEmail.value,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color(0xffE8E8E8),
                     focusedBorderColor = Color(0xff5DB075),
@@ -121,7 +99,7 @@ fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
-                value = viewModel.LogPassword.value,
+                value = viewModel.logPassword.value,
                 singleLine = true,
                 onValueChange = { viewModel.changePassword(it) },
                 keyboardOptions = KeyboardOptions(
@@ -138,7 +116,7 @@ fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { OnNextTela() },
+            Button(onClick = { onScreenCursos() },
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -164,5 +142,5 @@ fun Forms(OnNextTela: () -> Unit, viewModel: ViewModelPP){
 //@Preview(showSystemUi = true)
 //@Composable
 //fun asd(){
-//    LogScreen(OnNextTela)
+//    LogScreen(Unit)
 //}
