@@ -94,6 +94,7 @@ fun Forms(){
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
+                singleLine = true,
                 onValueChange = { textoEmail = it },
                 label = { Text("Email",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD)) }
             )
@@ -114,6 +115,7 @@ fun Forms(){
                     containerColor = Color(0xffF6F6F6),
                 ),
                 value = textoPassword,
+                singleLine = true,
                 onValueChange = { textoPassword = it },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,

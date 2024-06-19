@@ -124,6 +124,7 @@ fun inputSearch(){
                 containerColor = Color(0xffF6F6F6),
             ),
             onValueChange = { textSearch = it },
+            singleLine = true,
             label = { Text("Search",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD))}
         )
     }
