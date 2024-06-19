@@ -1,35 +1,39 @@
 package com.example.primeiroprojeto
 
 import android.annotation.SuppressLint
-import android.view.MotionEvent
+import android.content.res.Resources
+import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,30 +41,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material.ContentAlpha
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
+import com.example.primeiroprojeto.ui.theme.inputBackgroundColor
 import com.example.primeiroprojeto.ui.theme.inputBorderColor
-import kotlin.math.abs
-import kotlin.math.absoluteValue
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -77,8 +80,7 @@ fun ProfileScreen(){
 
 
 
-@Preview(showBackground = true,
-    showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfileScreenPreview(){
     PrimeiroProjetoTheme {
@@ -88,7 +90,7 @@ fun ProfileScreenPreview(){
 
 @Composable
 fun ProfileScreenTopAppBar() {
-    val CustomFontFamily500 = FontFamily(Font(R.font.inter_semibold))
+    val customFontFamily500 = FontFamily(Font(R.font.inter_semibold))
     Box (
         modifier = Modifier
             .fillMaxWidth()
@@ -122,7 +124,7 @@ fun ProfileScreenTopAppBar() {
             Text(
                 text = stringResource(id = R.string.profile_screen_topbar_name),
                 color = Color.White,
-                fontFamily = CustomFontFamily500,
+                fontFamily = customFontFamily500,
                 fontSize = 24.sp
             )
 
@@ -145,38 +147,6 @@ fun ProfileScreenTopAppBar() {
         }
     }
 }
-
-
-@Composable
-fun ProfileScreenImage(){
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        Card(shape = CircleShape,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(100.dp),
-        ) {
-           Image(
-               painter = painterResource(
-                   id = R.drawable.profileimage
-               ),
-               contentDescription = null,
-               modifier = Modifier
-                   .fillMaxSize()
-                   .clickable { },
-               contentScale = ContentScale.Fit
-           )
-        }
-
-    }
-}
-
-
 
 @Composable
 fun ProfileScreenBottomBar(){
@@ -266,7 +236,8 @@ fun CustomComponent() {
                 .padding(start = 8.dp, end = 8.dp)
                 .fillMaxWidth()
         )
-        Text(text = "Switch button here")
+        //switch button
+        DoubleSwitchButton()
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -278,6 +249,7 @@ fun CustomComponent() {
     }
 }
 
+@SuppressLint("ResourceType")
 @Composable
 fun PostProfile(){
     Column (
@@ -314,4 +286,43 @@ fun PostProfile(){
             fontSize = 14.sp
         )
     }
+}
+
+//TENTATIVAS DE SWITCH ---------------------------------------------------------------------------------------------------
+@Composable
+fun DoubleSwitchButton(){
+    var selectedIndex by remember {
+        mutableStateOf(0)
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .border(1.dp, color = inputBorderColor, RoundedCornerShape(50)),
+    ){
+        Button(
+            onClick = {selectedIndex = 0},
+            modifier = Modifier.weight(1f),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (selectedIndex == 0) MaterialTheme.colorScheme.surface else inputBackgroundColor,
+                contentColor = if (selectedIndex == 0) greenPrimary else grayPrimary,
+            ),
+            shape = RoundedCornerShape(50)
+        ){
+            Text(text = "Cursos")
+        }
+
+        Button(
+            onClick = {selectedIndex = 1},
+            modifier = Modifier.weight(1f),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (selectedIndex == 1) MaterialTheme.colorScheme.surface else inputBackgroundColor,
+                contentColor = if (selectedIndex == 1) greenPrimary else grayPrimary,
+            ),
+            shape = RoundedCornerShape(50)
+        ){
+            Text(text = "Aulas")
+        }
+    }
+
 }
