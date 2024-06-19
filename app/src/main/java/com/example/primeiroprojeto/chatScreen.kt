@@ -156,31 +156,6 @@ fun inputScreenBottomBar(){
     }
 }
 
-@Composable
-fun Header(title: String){
-    val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
-    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(0.dp, 10.dp, 0.dp, 0.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xfffffff))
-        ) {
-            Text("Back", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
-        }
-
-        Text(text = title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp )
-
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xfffffff))
-        ) {
-            Text(text = "Filter", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
-        }
-    }
-}
 
 @Preview
 @Composable
