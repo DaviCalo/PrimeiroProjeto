@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -204,19 +206,25 @@ fun CustomCheckBox() {
     var checked by remember {
         mutableStateOf(true)
     }
+
+    val checkboxColors = CheckboxDefaults.colors(
+        checkedColor = greenPrimary,
+        uncheckedColor = inputBackgroundColor,
+        checkmarkColor = inputBorderColor,
+        disabledIndeterminateColor = Color.Transparent,
+    )
+
     Row(
         modifier = Modifier.padding(top = 15.dp, bottom = 15.dp)
     ) {
         Checkbox(
-            checked = !checked,
+            checked = checked,
             onCheckedChange = { checked = it },
+            colors = checkboxColors,
+            modifier = Modifier.padding(end = 8.dp)
         )
-        /*colors = CheckboxColors(
-            //TODO
-        )
-        */
+
         Text(
-            modifier = Modifier,
             text = stringResource(id = R.string.sign_screen_check_box),
         )
     }
