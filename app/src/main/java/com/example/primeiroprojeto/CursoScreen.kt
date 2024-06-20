@@ -173,10 +173,10 @@ fun miniCards(){
             Box(
                 modifier = with (Modifier){
                     height(227.dp)
-                        .padding(0.dp, 15.dp)
-                        .width(357.dp)
-                        .clip(RoundedCornerShape(30.dp))
-                        .background(Color.Green)
+                    .padding(0.dp, 15.dp)
+                    .width(357.dp)
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(Color.Green)
                 }
             ) {}
         }
@@ -225,7 +225,6 @@ fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onSc
 
 @Composable
 fun CircularBottomButton(color: Color, onScreen: () -> Unit){
-
     Button(
         onClick = { onScreen() },
         modifier = Modifier.size(50.dp),
