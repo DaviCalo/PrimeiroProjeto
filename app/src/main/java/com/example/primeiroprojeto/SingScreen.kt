@@ -1,5 +1,6 @@
 package com.example.primeiroprojeto
 
+import ViewModelSign
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +19,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,28 +29,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
+import com.example.primeiroprojeto.ui.theme.grayStringGCheckBox
 import com.example.primeiroprojeto.ui.theme.greenPrimary
 import com.example.primeiroprojeto.ui.theme.inputBackgroundColor
 import com.example.primeiroprojeto.ui.theme.inputBorderColor
@@ -68,15 +63,15 @@ fun SignScreen() {
                 .padding(8.dp)
         ) {
             TopAppBar(title = { SignScreenTopAppBar() })
-            CustomSignInput("Name")
-            CustomSignInput("Email")
+            //DictCustomSignInput()
+            CustomSignInput(string = "Name")
+            CustomSignInput(string = "Email")
             CustomSignInputPassword("Password")
             CustomCheckBox()
             SignUpButton()
         }
     }
 }
-
 
 @Preview(
     showBackground = true,
@@ -85,14 +80,13 @@ fun SignScreen() {
 @Composable
 fun SignScreenPreview() {
     PrimeiroProjetoTheme {
-        SignScreen()
-
+        //SignScreen()
     }
 }
 
 @Composable
 fun SignScreenTopAppBar() {
-    val CustomFontFamily500 = FontFamily(Font(R.font.inter_semibold))
+    val customFontFamily500 = FontFamily(Font(R.font.inter_semibold))
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -103,14 +97,12 @@ fun SignScreenTopAppBar() {
             contentDescription = null,
             tint = grayPrimary
         )
-
         Text(
             text = stringResource(id = R.string.sign_screen_topbar_name),
             color = Color.Black,
-            fontFamily = CustomFontFamily500,
+            fontFamily = customFontFamily500,
             fontSize = 24.sp,
         )
-
         ClickableText(
             text = AnnotatedString(
                 text = stringResource(id = R.string.sign_screen_topbar_login),
@@ -130,15 +122,25 @@ fun SignScreenTopAppBar() {
     }
 }
 
+/*
+@Composable
+fun DictCustomSignInput(){
+    val dictionary = mutableMapOf<Int, String>()
+    dictionary[1] = "Name"
+    dictionary[2] = "Email"
+
+    for (inputs in dictionary.entries){
+        val value = dictionary.values
+        val key = dictionary.keys
+        value.toString()
+        CustomSignInput(int = key, string = value)
+    }
+}
+*/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomSignInput(string: String) {
-    var texto by remember {
-        mutableStateOf("")
-    }
-    var novoTexto = remember {
-        mutableStateOf(TextFieldValue())
-    }
+fun CustomSignInput(string: String,) {
+    val stayInput = viewModel<ViewModelSign>()
 
     OutlinedTextField(
         modifier = Modifier
@@ -150,8 +152,8 @@ fun CustomSignInput(string: String) {
             focusedBorderColor = inputBorderColor,
             containerColor = inputBackgroundColor
         ),
-        value = novoTexto.value,
-        onValueChange = { novoTexto.value = it },
+        value = stayInput.inputString.value,
+        onValueChange = { stayInput.inputString.value = it },
         label = {
             Text(
                 text = string,
@@ -165,8 +167,8 @@ fun CustomSignInput(string: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomSignInputPassword(string: String) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
-    var passwordVisible by remember { mutableStateOf(false) }
+    val textFieldValue = viewModel<ViewModelSign>()
+    val passwordVisible = viewModel<ViewModelSign>()
 
     OutlinedTextField(
         shape = RoundedCornerShape(10.dp),
@@ -178,8 +180,8 @@ fun CustomSignInputPassword(string: String) {
             focusedBorderColor = inputBorderColor,
             containerColor = inputBackgroundColor
         ),
-        value = textFieldValue,
-        onValueChange = { textFieldValue = it },
+        value = textFieldValue.inputStringPassword.value,
+        onValueChange = { textFieldValue.inputStringPassword.value = it },
         label = {
             Text(
                 text = string,
@@ -188,24 +190,29 @@ fun CustomSignInputPassword(string: String) {
         },
         singleLine = true,
         trailingIcon = {
-            ClickableText(
-                modifier = Modifier.padding(end = 15.dp),
-                text = AnnotatedString("Show"),
-                onClick = { passwordVisible = !passwordVisible },
-                style = LocalTextStyle.current.copy(color = greenPrimary)
-            )
-
+            if(!passwordVisible.passwordVisibleCheck.value){
+                ClickableText(
+                    modifier = Modifier.padding(end = 15.dp),
+                    text = AnnotatedString("Show"),
+                    onClick = { passwordVisible.passwordVisibleCheck.value = !passwordVisible.passwordVisibleCheck.value },
+                    style = LocalTextStyle.current.copy(color = greenPrimary)
+                )
+            }else{
+                ClickableText(
+                    modifier = Modifier.padding(end = 15.dp),
+                    text = AnnotatedString("Hide"),
+                    onClick = { passwordVisible.passwordVisibleCheck.value = !passwordVisible.passwordVisibleCheck.value },
+                    style = LocalTextStyle.current.copy(color = greenPrimary)
+                )
+            }
         },
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
+        visualTransformation = if (passwordVisible.passwordVisibleCheck.value) VisualTransformation.None else PasswordVisualTransformation(),
         )
 }
 
 @Composable
 fun CustomCheckBox() {
-    var checked by remember {
-        mutableStateOf(true)
-    }
+    val check = viewModel<ViewModelSign>()
 
     val checkboxColors = CheckboxDefaults.colors(
         checkedColor = greenPrimary,
@@ -218,14 +225,16 @@ fun CustomCheckBox() {
         modifier = Modifier.padding(top = 15.dp, bottom = 15.dp)
     ) {
         Checkbox(
-            checked = checked,
-            onCheckedChange = { checked = it },
+            checked = check.checked.value,
+            onCheckedChange = { check.checked.value = it },
             colors = checkboxColors,
             modifier = Modifier.padding(end = 8.dp)
         )
-
         Text(
-            text = stringResource(id = R.string.sign_screen_check_box),
+            text = stringResource(
+                id = R.string.sign_screen_check_box
+            ),
+            color = grayStringGCheckBox,
         )
     }
 }
@@ -250,6 +259,5 @@ fun SignUpButton() {
         }
     }
 }
-
 
 //TODO: FAZER CHECKBOX STYLE AND FINISH sign screen
