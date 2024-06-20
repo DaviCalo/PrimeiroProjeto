@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class ViewModelCurso: ViewModel() {
+class ViewModelLogin: ViewModel() {
 
     private val _LogEmail = mutableStateOf("")
     private val _LogPsssword = mutableStateOf("")

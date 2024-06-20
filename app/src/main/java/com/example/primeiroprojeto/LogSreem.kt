@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ViewModels.ViewModelCurso
-import com.example.primeiroprojeto.ViewModels.ViewModelPP
+import com.example.primeiroprojeto.ViewModels.ViewModelLogin
 import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
@@ -57,7 +57,7 @@ fun  LogScreen(onScreenCursos: () -> Unit){
 @Composable
 fun Forms(onScreenCursos: () -> Unit){
 
-    val loginViewModel = viewModel<ViewModelCurso>()
+    val loginViewModel = viewModel<ViewModelLogin>()
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 

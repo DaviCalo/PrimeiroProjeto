@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.primeiroprojeto.ViewModels.ViewModelPP
+import com.example.primeiroprojeto.ViewModels.ViewModelCurso
 import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
@@ -89,7 +89,7 @@ fun Header(title: String){
 @Composable
 fun InputSearch(){
 //    var textSearch by remember { mutableStateOf("")}
-    val viewModelCursos = viewModel<ViewModelPP>()
+    val viewModelCursos = viewModel<ViewModelCurso>()
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
     Row(
@@ -110,7 +110,7 @@ fun InputSearch(){
                 focusedBorderColor = Color(0xff5DB075),
                 containerColor = Color(0xffF6F6F6),
             ),
-            onValueChange = { viewModelCursos.changeSearch(it) },
+            onValueChange = { viewModelCursos.search.value = it },
             singleLine = true,
             label = { Text("Search",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD))}
         )
