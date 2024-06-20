@@ -216,7 +216,7 @@ fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onSc
                 if(i == telaSelecionada){
                     CircularBottomButton(Color.Green, { })
                 }else{
-                   CircularBottomButton(Color.Gray, { })
+                   CircularBottomButton(Color.Gray, arrayFun[i])
                 }
             }
         }
@@ -225,6 +225,7 @@ fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onSc
 
 @Composable
 fun CircularBottomButton(color: Color, onScreen: () -> Unit){
+
     Button(
         onClick = { onScreen() },
         modifier = Modifier.size(50.dp),
