@@ -50,11 +50,18 @@ fun App() {
             }
 
             composable("CursoScreen"){
-                CursosScreem()
+                CursosScreem(
+                    onScreenSheet = {navController.navigate(("Sheet"))},
+                    onScreenChat =  {navController.navigate(("ChatScreen"))},
+                    onScreenProfile = {}
+                )
             }
-
+//            onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit
             composable("ChatScreen"){
-                ChatScreen()
+                ChatScreen(
+                    onScreenCurso = {navController.navigate(("CursoScreen"))},
+                    onScreenSheet = {navController.navigate(("Sheet"))},
+                    onScreenProfile = {navController.navigate(("CongratulationsScreen"))})
             }
 
             composable("CongratulationsScreen"){

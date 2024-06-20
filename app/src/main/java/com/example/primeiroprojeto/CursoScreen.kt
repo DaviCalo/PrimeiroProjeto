@@ -38,13 +38,12 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ViewModels.ViewModelCurso
-import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
-fun CursosScreem(){
+fun CursosScreem(onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
     Scaffold(
         topBar = { Header("Cursos") },
-        bottomBar = { ClassesScreenBottomBar() },
+        bottomBar = { ClassesScreenBottomBar(1,onScreenSheet, onScreenChat, onScreenProfile) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -54,7 +53,7 @@ fun CursosScreem(){
         ) {
             InputSearch()
             ContainerCursos()
-            miniCards()
+//            miniCards()
         }
     }
 }
@@ -187,11 +186,12 @@ fun miniCards(){
 @Preview(showSystemUi = true)
 @Composable
 fun aasd(){
-    CursosScreem()
+    CursosScreem( { }, {}, {} )
 }
 
 @Composable
-fun ClassesScreenBottomBar(){
+fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
+    val arrayFun = arrayOf(onScreenSheet, onScreenChat,  onScreenProfile)
     BottomAppBar (
         modifier = Modifier
             .fillMaxWidth()
@@ -205,20 +205,28 @@ fun ClassesScreenBottomBar(){
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularBottomButton(Color.Green)
-            repeat(4){
-                CircularBottomButton(Color.Gray)
-            } //pode usar isso para repetir algo varias vezes
-
-
+//          for(i in arrayFun){
+//              if(i == telaSelecionada){
+//                  CircularBottomButton(Color.Green, { })
+//              }else{
+//                  CircularBottomButton(Color.Gray, i as () -> Unit)
+//              }
+//          }
+            for (i in 1..4) {
+                if(i == telaSelecionada){
+                    CircularBottomButton(Color.Green, { })
+                }else{
+                   CircularBottomButton(Color.Gray, { })
+                }
+            }
         }
     }
 }
 
 @Composable
-fun CircularBottomButton(color: Color){
+fun CircularBottomButton(color: Color, onScreen: () -> Unit){
     Button(
-        onClick = {/*TODO*/},
+        onClick = { onScreen() },
         modifier = Modifier.size(50.dp),
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(containerColor = color)

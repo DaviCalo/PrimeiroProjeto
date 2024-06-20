@@ -58,6 +58,7 @@ fun  LogScreen(onScreenCursos: () -> Unit){
 fun Forms(onScreenCursos: () -> Unit){
 
     val loginViewModel = viewModel<ViewModelLogin>()
+
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 

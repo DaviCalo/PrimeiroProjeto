@@ -39,18 +39,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ViewModels.ViewModelSup
 
 @Composable
-fun ChatScreen(){
+fun ChatScreen( onScreenCurso: () -> Unit, onScreenSheet: () -> Unit, onScreenProfile: () -> Unit){
     Scaffold(
     topBar = { Header("Suporte") },
-    bottomBar = { InputScreenBottomBar() },
+    bottomBar = { ClassesScreenBottomBar(3, onScreenCurso, onScreenSheet, onScreenProfile)},
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             MessagesComposable()
+            InputScreenBottomBar()
         }
     }
 }
@@ -168,5 +170,5 @@ fun InputScreenBottomBar(){
 @Preview
 @Composable
 fun Asdasd(){
-    ChatScreen()
+    ChatScreen({}, {}, { })
 }
