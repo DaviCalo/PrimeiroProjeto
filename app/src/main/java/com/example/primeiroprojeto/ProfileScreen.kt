@@ -54,11 +54,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.wear.compose.material.ContentAlpha
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
@@ -85,6 +85,7 @@ fun ProfileScreen(){
 fun ProfileScreenPreview(){
     PrimeiroProjetoTheme {
         ProfileScreen()
+        //ContainerCursos()
     }
 }
 
@@ -187,6 +188,10 @@ fun ProfileCircularBottomButton(color: Color){
 
 @Composable
 fun CustomComponent() {
+    var selectedIndex by remember {
+        mutableStateOf(0)
+    }
+
     Column (
         modifier = Modifier
             .fillMaxWidth(),
@@ -237,13 +242,19 @@ fun CustomComponent() {
                 .fillMaxWidth()
         )
         //switch button
-        DoubleSwitchButton()
+        DoubleSwitchButton(selectedIndex){
+            newIndex -> selectedIndex = newIndex
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             items(3){
-                PostProfile()
+                if(selectedIndex == 0){
+                    ContainerCursos()
+                }else{
+                    PostProfile()
+                }
             }
         }
     }
@@ -290,20 +301,16 @@ fun PostProfile(){
 
 //TENTATIVAS DE SWITCH TODO: REMOVE RIPPLE EFFECTS FROM BUTTONS
 @Composable
-fun DoubleSwitchButton(){
-    var selectedIndex by remember {
-        mutableStateOf(0)
-    }
-
+fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit){
     Row(
         modifier = Modifier
-            .padding(start = 8.dp, end= 8.dp, top = 16.dp, bottom =  16.dp)
+            .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
             .background(inputBackgroundColor, RoundedCornerShape(50))
             .border(1.dp, color = inputBorderColor, RoundedCornerShape(50))
 
     ){
         Button(
-            onClick = {selectedIndex = 0},
+            onClick = {onSelectedIndexChange(0)},
             modifier = Modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (selectedIndex == 0) MaterialTheme.colorScheme.surface else inputBackgroundColor,
@@ -316,7 +323,7 @@ fun DoubleSwitchButton(){
         }
 
         Button(
-            onClick = {selectedIndex = 1},
+            onClick = {onSelectedIndexChange(1)},
             modifier = Modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (selectedIndex == 1) MaterialTheme.colorScheme.surface else inputBackgroundColor,
@@ -328,5 +335,73 @@ fun DoubleSwitchButton(){
             Text(text = "Certificados")
         }
     }
+}
 
+
+// CURSOS PARTE
+@Composable
+fun ContainerCursos(){
+    val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
+        for (name in nameCursos){
+            CardCursos(name)
+        }
+    }
+}
+
+@Composable
+fun CardCursos(nameCurso: String){
+    val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
+    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(15.dp, 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color.Gray)
+                .width(50.dp)
+                .height(50.dp)
+        )
+        Column(
+            Modifier.width(300.dp)
+        ) {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = nameCurso, fontFamily = interSemiBlod, fontSize = 16.sp)
+                Text(text = "8m ago", fontFamily = interMedium, fontSize = 16.sp, color = Color(0xffBDBDBD))
+            }
+            Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
+//          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
+        }
+    }
+}
+
+@Composable
+fun Imas(){
+    Column(
+        Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        repeat(4){
+            Box(
+                modifier = with (Modifier){
+                    height(227.dp)
+                        .padding(0.dp, 15.dp)
+                        .width(357.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                        .background(Color.Green)
+                }
+            ) {}
+        }
+    }
 }
