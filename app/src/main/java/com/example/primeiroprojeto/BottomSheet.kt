@@ -1,5 +1,6 @@
 package com.example.primeiroprojeto
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,7 +55,7 @@ fun BottomSheet(){
     }
 
     Column(
-        Modifier.fillMaxSize(),
+        Modifier.fillMaxSize().background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -94,7 +95,7 @@ fun CountryList(){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Drawer Header", fontSize = 24.sp, fontFamily = interMedium)
+            Text(text = "Drawer Header", fontSize = 24.sp, fontFamily = interMedium, color = Color.Black)
 
             Text(text = "Consequat velit qui adipisicing sunt do reprehenderit ad laborum tempor ullamco exercitation.",fontSize = 16.sp, fontFamily = interMedium, color = Color(0xff666666), textAlign = TextAlign.Center)
         }
