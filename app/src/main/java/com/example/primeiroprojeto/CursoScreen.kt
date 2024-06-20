@@ -212,11 +212,11 @@ fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onSc
 //                  CircularBottomButton(Color.Gray, i as () -> Unit)
 //              }
 //          }
-            for (i in 1..4) {
+            for (i in 0..4) {
                 if(i == telaSelecionada){
                     CircularBottomButton(Color.Green, { })
                 }else{
-                   CircularBottomButton(Color.Gray, arrayFun[i])
+                   CircularBottomButton(Color.Gray, arrayFun[i-1] as () -> Unit)
                 }
             }
         }
