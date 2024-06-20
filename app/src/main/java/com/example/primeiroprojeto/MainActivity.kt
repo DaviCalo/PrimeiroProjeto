@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.primeiroprojeto.ViewModels.ViewModelPP
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,8 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PrimeiroProjetoTheme {
-                val viewModel: ViewModelPP by viewModels()
-                App(viewModel = viewModel)
+                App()
             }
         }
     }
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
 //val viewModel: TesteViewModel by viewModels()
 //test(viewModel = viewModel)
 @Composable
-fun App(viewModel: ViewModelPP) {
+fun App() {
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.onSurface
@@ -42,8 +43,7 @@ fun App(viewModel: ViewModelPP) {
                 LogScreen(
                     onScreenCursos = {
                         navController.navigate("CursoScreen")
-                    }, viewModel
-                )
+                    })
             }
 
             composable("SignScreen") {
@@ -51,7 +51,7 @@ fun App(viewModel: ViewModelPP) {
             }
 
             composable("CursoScreen"){
-                CursosScreem(viewModel)
+                CursosScreem()
             }
 
             composable("ChatScreen"){
@@ -60,6 +60,10 @@ fun App(viewModel: ViewModelPP) {
 
             composable("CongratulationsScreen"){
                 CongratulationsScreen()
+            }
+
+            composable("Sheet"){
+                BottomSheet()
             }
         }
     }

@@ -35,6 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ViewModels.ViewModelSup
 
 @Composable
 fun ChatScreen(){
@@ -71,18 +73,20 @@ fun MessagesComposable(){
 fun MessageCard(message: String){
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.Medium))
     Column(
-        Modifier.fillMaxWidth()
-            .padding(0.dp,5.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(0.dp, 5.dp),
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center
     ) {
         Row(modifier = Modifier
             .clip(
-            RoundedCornerShape(
-                topStart = 48f,
-                topEnd = 48f,
-                bottomStart = 48f ,
-                bottomEnd = 0f)
+                RoundedCornerShape(
+                    topStart = 48f,
+                    topEnd = 48f,
+                    bottomStart = 48f,
+                    bottomEnd = 0f
+                )
             )
             .background(Color(0xff5db075))
             .width(265.dp)
@@ -97,8 +101,9 @@ fun MessageCard(message: String){
 fun MessageCardAnother(message: String){
         val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.Medium))
         Column(
-            Modifier.fillMaxWidth()
-                .padding(0.dp,5.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 5.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
@@ -107,10 +112,15 @@ fun MessageCardAnother(message: String){
                 RoundedCornerShape(
                     topStart = 48f,
                     topEnd = 48f,
-                    bottomStart = 0f ,
-                    bottomEnd = 48f)
+                    bottomStart = 0f,
+                    bottomEnd = 48f
+                )
             )
-            .border(2.dp, Color(0xffeeeeee),RoundedCornerShape(topStart = 48f, topEnd = 48f, bottomStart = 0f , bottomEnd = 48f))
+            .border(
+                2.dp,
+                Color(0xffeeeeee),
+                RoundedCornerShape(topStart = 48f, topEnd = 48f, bottomStart = 0f, bottomEnd = 48f)
+            )
             .background(Color(0xfff6f6f6))
             .width(265.dp)
             .padding(15.dp)
@@ -121,16 +131,18 @@ fun MessageCardAnother(message: String){
 
 @Composable
 fun InputScreenBottomBar(){
-    var asd by remember { mutableStateOf("")}
+    val viewModelSup = viewModel<ViewModelSup>()
+
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
+
     Row {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
+                .padding(top = 4.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
             shape = RoundedCornerShape(50.dp),
-            value = asd ,
-            onValueChange = { asd = it },
+            value = viewModelSup.InputSeach.value,
+            onValueChange = { viewModelSup.InputSeach.value = it },
             label = {
                 Text(
                     text = "Message here...",

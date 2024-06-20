@@ -54,7 +54,6 @@ fun Message(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageText()
-
         MessageButtons()
     }
 }
@@ -68,7 +67,7 @@ fun MessageText(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Parabéns !", fontFamily = interSemiBlod, fontSize = 30.sp)
+        Text(text = "Parabéns!", fontFamily = interSemiBlod, fontSize = 30.sp)
         Text(text = "Consequat velit qui adipisicing sunt do reprehenderit ad laborum tempor ullamco exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua esse ex dolore esse. Consequat velit qui adipisicing sunt.",  textAlign = TextAlign.Center, fontFamily = interMedium, color = Color(0xff666666), fontSize = 14.sp)
     }
 }

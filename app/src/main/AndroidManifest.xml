@@ -19,6 +19,9 @@
             android:name=".LogSreem"
             android:exported="false" />
         <activity
+            android:name=".aasd"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

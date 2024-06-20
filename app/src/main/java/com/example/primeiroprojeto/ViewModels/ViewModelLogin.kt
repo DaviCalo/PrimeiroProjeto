@@ -1,10 +1,11 @@
-package com.example.primeiroprojeto
+package com.example.primeiroprojeto.ViewModels
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class ViewModelPP : ViewModel() {
+class ViewModelCurso: ViewModel() {
 
     private val _LogEmail = mutableStateOf("")
     private val _LogPsssword = mutableStateOf("")
@@ -17,15 +18,5 @@ class ViewModelPP : ViewModel() {
     }
     fun changePassword(password: String){
         logPassword.value = password
-    }
-
-
-
-    private val  _Search = mutableStateOf("")
-    val search: MutableState<String> = _Search
-
-
-    fun changeSearch(name: String){
-        search.value = name
     }
 }

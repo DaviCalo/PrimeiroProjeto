@@ -30,9 +30,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ViewModels.ViewModelCurso
+import com.example.primeiroprojeto.ViewModels.ViewModelPP
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
-fun  LogScreen(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
+fun  LogScreen(onScreenCursos: () -> Unit){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier
@@ -45,14 +49,15 @@ fun  LogScreen(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Log in", fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp)
-        Forms(onScreenCursos, viewModel)
+        Forms(onScreenCursos)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
+fun Forms(onScreenCursos: () -> Unit){
 
+    val loginViewModel = viewModel<ViewModelCurso>()
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
@@ -73,14 +78,14 @@ fun Forms(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10),
-                value = viewModel.logEmail.value,
+                value = loginViewModel.logEmail.value,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color(0xffE8E8E8),
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
                 singleLine = true,
-                onValueChange = { viewModel.changeEmail(it) },
+                onValueChange = { loginViewModel.changeEmail(it) },
                 label = { Text("Email",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD)) }
             )
             OutlinedTextField(
@@ -99,9 +104,9 @@ fun Forms(onScreenCursos: () -> Unit, viewModel: ViewModelPP){
                     focusedBorderColor = Color(0xff5DB075),
                     containerColor = Color(0xffF6F6F6),
                 ),
-                value = viewModel.logPassword.value,
+                value = loginViewModel.logPassword.value,
                 singleLine = true,
-                onValueChange = { viewModel.changePassword(it) },
+                onValueChange = { loginViewModel.changePassword(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done

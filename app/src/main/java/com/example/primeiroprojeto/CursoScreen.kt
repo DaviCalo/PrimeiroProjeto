@@ -35,9 +35,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ViewModels.ViewModelPP
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
-fun CursosScreem(viewModel: ViewModelPP){
+fun CursosScreem(){
     Scaffold(
         topBar = { Header("Cursos") },
         bottomBar = { ClassesScreenBottomBar() },
@@ -48,9 +52,9 @@ fun CursosScreem(viewModel: ViewModelPP){
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            InputSearch(viewModel)
+            InputSearch()
             ContainerCursos()
-            Imas()
+            miniCards()
         }
     }
 }
@@ -83,8 +87,9 @@ fun Header(title: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InputSearch(viewModel: ViewModelPP){
+fun InputSearch(){
 //    var textSearch by remember { mutableStateOf("")}
+    val viewModelCursos = viewModel<ViewModelPP>()
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
     Row(
@@ -99,13 +104,13 @@ fun InputSearch(viewModel: ViewModelPP){
                 .fillMaxWidth()
                 .padding(15.dp, 0.dp),
             shape = RoundedCornerShape(50),
-            value =  viewModel.search.value,
+            value =  viewModelCursos.search.value,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = Color(0xffE8E8E8),
                 focusedBorderColor = Color(0xff5DB075),
                 containerColor = Color(0xffF6F6F6),
             ),
-            onValueChange = { viewModel.changeSearch(it) },
+            onValueChange = { viewModelCursos.changeSearch(it) },
             singleLine = true,
             label = { Text("Search",fontFamily = interMedium, fontSize = 16.sp, fontWeight = FontWeight.Medium,color = Color(0xffBDBDBD))}
         )
@@ -159,7 +164,7 @@ fun CardCursos(nameCurso: String){
 }
 
 @Composable
-fun Imas(){
+fun miniCards(){
     Column(
         Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -179,11 +184,11 @@ fun Imas(){
     }
 }
 
-//@Preview(showSystemUi = true)
-//@Composable
-//fun aasd(){
-//    CursosScreem()
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun aasd(){
+    CursosScreem()
+}
 
 @Composable
 fun ClassesScreenBottomBar(){
