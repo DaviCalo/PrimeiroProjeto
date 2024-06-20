@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -23,31 +24,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 import com.example.primeiroprojeto.ViewModels.ViewModelSup
 
 @Composable
-fun ChatScreen( onScreenCurso: () -> Unit, onScreenSheet: () -> Unit, onScreenProfile: () -> Unit){
+fun ChatScreen(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
     Scaffold(
     topBar = { Header("Suporte") },
-    bottomBar = { ClassesScreenBottomBar(3, onScreenCurso, onScreenSheet, onScreenProfile)},
+    bottomBar = { ClassesScreenBottomBarChat(onScreenCurso, onScreenProfile) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .background(Color.White)
                 .padding(innerPadding),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -60,7 +57,7 @@ fun ChatScreen( onScreenCurso: () -> Unit, onScreenSheet: () -> Unit, onScreenPr
 @Composable
 fun MessagesComposable(){
     Column(
-        Modifier.padding(20.dp)
+        Modifier.padding(20.dp).verticalScroll(rememberScrollState())
     ) {
         repeat(2){
             MessageCard("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
@@ -167,8 +164,38 @@ fun InputScreenBottomBar(){
 }
 
 
-@Preview
 @Composable
-fun Asdasd(){
-    ChatScreen({}, {}, { })
+fun ClassesScreenBottomBarChat(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
+    val loginViewModel = viewModel<ViewModelSheet>()
+    if (loginViewModel.Sheet.value) {
+        BottomSheet {
+            loginViewModel.Sheet.value = false
+        }
+    }
+    fun asd(){loginViewModel.Sheet.value = true}
+    BottomAppBar (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(width = 2.dp, color = Color.White),
+        containerColor = Color.White
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp, 0.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularBottomButton(Color.Gray,onScreenCurso)
+            CircularBottomButton(Color.Gray) {asd()}
+            CircularBottomButton(Color.Green){}
+            CircularBottomButton(Color.Gray,onScreenProfile)
+        }
+    }
 }
+
+//@Preview
+//@Composable
+//fun Asdasd(){
+//    ChatScreen({}, {}, { })
+//}

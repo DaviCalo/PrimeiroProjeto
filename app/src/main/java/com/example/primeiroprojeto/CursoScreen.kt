@@ -38,22 +38,24 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ViewModels.ViewModelCurso
+import com.example.primeiroprojeto.ViewModels.ViewModelSheet
 
 @Composable
-fun CursosScreem(onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
+fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
     Scaffold(
         topBar = { Header("Cursos") },
-        bottomBar = { ClassesScreenBottomBar(1,onScreenSheet, onScreenChat, onScreenProfile) },
+        bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .background(Color.White)
                 .padding(innerPadding)
         ) {
             InputSearch()
             ContainerCursos()
-//            miniCards()
+            MiniCards()
         }
     }
 }
@@ -75,7 +77,7 @@ fun Header(title: String){
             Text(text = "Back", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
         }
 
-        Text(text = title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp )
+        Text(text = title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = Color.Black )
 
         Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffffffff))
         ) {
@@ -87,7 +89,6 @@ fun Header(title: String){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputSearch(){
-//    var textSearch by remember { mutableStateOf("")}
     val viewModelCursos = viewModel<ViewModelCurso>()
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
 
@@ -137,7 +138,7 @@ fun CardCursos(nameCurso: String){
             .fillMaxWidth()
             .padding(15.dp, 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Box(
             modifier = Modifier
@@ -153,19 +154,19 @@ fun CardCursos(nameCurso: String){
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = nameCurso, fontFamily = interSemiBlod, fontSize = 16.sp)
+                Text(text = nameCurso, fontFamily = interSemiBlod, fontSize = 16.sp, color = Color.Black)
                 Text(text = "8m ago", fontFamily = interMedium, fontSize = 16.sp, color = Color(0xffBDBDBD))
             }
-            Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
+            Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp, color = Color.Gray)
 //          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
         }
     }
 }
 
 @Composable
-fun miniCards(){
+fun MiniCards(){
     Column(
-        Modifier.fillMaxWidth(),
+        Modifier.fillMaxWidth().padding(15.dp,0.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -185,40 +186,36 @@ fun miniCards(){
 
 @Preview(showSystemUi = true)
 @Composable
-fun aasd(){
-    CursosScreem( { }, {}, {} )
+fun PreviewCursp(){
+    CursosScreem( {}, {} )
 }
 
 @Composable
-fun ClassesScreenBottomBar(telaSelecionada: Int, onScreenSheet: () -> Unit, onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
-    val arrayFun = arrayOf(onScreenSheet, onScreenChat,  onScreenProfile)
+fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
+    val loginViewModel = viewModel<ViewModelSheet>()
+    if (loginViewModel.Sheet.value) {
+        BottomSheet {
+            loginViewModel.Sheet.value = false
+        }
+    }
+    fun asd(){loginViewModel.Sheet.value = true}
     BottomAppBar (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp, 0.dp)
             .border(width = 2.dp, color = Color.White),
         containerColor = Color.White
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(15.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-//          for(i in arrayFun){
-//              if(i == telaSelecionada){
-//                  CircularBottomButton(Color.Green, { })
-//              }else{
-//                  CircularBottomButton(Color.Gray, i as () -> Unit)
-//              }
-//          }
-            for (i in 0..4) {
-                if(i == telaSelecionada){
-                    CircularBottomButton(Color.Green, { })
-                }else{
-                   CircularBottomButton(Color.Gray, arrayFun[i-1] as () -> Unit)
-                }
-            }
+            CircularBottomButton(Color.Green) {}
+            CircularBottomButton(Color.Gray) { asd() }
+            CircularBottomButton(Color.Gray, onScreenChat)
+            CircularBottomButton(Color.Gray,onScreenProfile)
         }
     }
 }

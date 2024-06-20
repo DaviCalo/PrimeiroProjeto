@@ -37,7 +37,7 @@ fun App() {
         color = MaterialTheme.colorScheme.onSurface
     ){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "LogScreen") {
+        NavHost(navController = navController, startDestination = "ChatScreen") {
             composable("LogScreen") {
                 LogScreen(
                     onScreenCursos = {
@@ -51,7 +51,6 @@ fun App() {
 
             composable("CursoScreen"){
                 CursosScreem(
-                    onScreenSheet = {navController.navigate(("Sheet"))},
                     onScreenChat =  {navController.navigate(("ChatScreen"))},
                     onScreenProfile = {}
                 )
@@ -60,8 +59,8 @@ fun App() {
             composable("ChatScreen"){
                 ChatScreen(
                     onScreenCurso = {navController.navigate(("CursoScreen"))},
-                    onScreenSheet = {navController.navigate(("Sheet"))},
-                    onScreenProfile = {navController.navigate(("CongratulationsScreen"))})
+                    onScreenProfile = {}
+                )
             }
 
             composable("CongratulationsScreen"){
