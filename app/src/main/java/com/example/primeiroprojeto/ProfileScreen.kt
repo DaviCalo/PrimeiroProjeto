@@ -79,6 +79,7 @@ import com.example.primeiroprojeto.viewModels.ViewModelSheet
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 <<<<<<< HEAD
+<<<<<<< HEAD
 fun ProfileScreen(){
 <<<<<<< HEAD
     val scrollState = rememberScrollState()
@@ -87,6 +88,9 @@ fun ProfileScreen(){
 =======
 fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit,){
 >>>>>>> e1b0679 (fix bug rebase joao)
+=======
+fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
+>>>>>>> 6b959e8 (nav feito)
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBarProfile(onScreenCurso, onScreenChat) },

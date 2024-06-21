@@ -34,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.viewModels.ViewModelLogin
 
 @Composable
-fun  LogScreen(onScreenCursos: () -> Unit){
+fun  LogScreen(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier
@@ -47,13 +47,13 @@ fun  LogScreen(onScreenCursos: () -> Unit){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Log in", fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp)
-        Forms(onScreenCursos)
+        Forms(onScreenCurso, onScreenSign)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms(onScreenCursos: () -> Unit){
+fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
 
     val loginViewModel = viewModel<ViewModelLogin>()
 
@@ -120,7 +120,7 @@ fun Forms(onScreenCursos: () -> Unit){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { onScreenCursos() },
+            Button(onClick = { onScreenCurso() },
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -129,7 +129,7 @@ fun Forms(onScreenCursos: () -> Unit){
                 )) {
                 Text(text = "Log In",  fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Color.White)
             }
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = {  onScreenSign() },
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)

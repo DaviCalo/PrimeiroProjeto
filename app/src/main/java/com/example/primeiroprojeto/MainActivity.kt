@@ -36,13 +36,13 @@ fun App() {
         NavHost(navController = navController, startDestination = "LogScreen") {
             composable("LogScreen") {
                 LogScreen(
-                    onScreenCursos = {
-                        navController.navigate("CursoScreen")
-                    })
+                    onScreenCurso = { navController.navigate("CursoScreen") },
+                    onScreenSign = { navController.navigate("SignScreen") }
+                )
             }
 
             composable("SignScreen") {
-                SignScreen()
+                SignScreen(  onScreenCurso = { navController.navigate("CursoScreen")} )
             }
 
             composable("CursoScreen"){
