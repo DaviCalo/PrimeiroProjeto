@@ -35,13 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.primeiroprojeto.ViewModels.ViewModelCurso
-import com.example.primeiroprojeto.ViewModels.ViewModelSheet
+import com.example.primeiroprojeto.viewModels.ViewModelCurso
+import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @Composable
 fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
@@ -126,15 +125,18 @@ fun ContainerCursos(){
     val imageCursos = arrayOf(R.drawable.java, R.drawable.kotlin, R.drawable.python,R.drawable.go)
     Column(
         Modifier.fillMaxWidth()
+                .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        for (name in nameCursos){
-            CardCursos(name)
+        for (i in 0 .. 3){
+            CardCursos(nameCursos[i], imageCursos[i])
         }
     }
 }
 
 @Composable
-fun CardCursos(nameCurso: String){
+fun CardCursos(nameCurso: String, image:Int){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row(
@@ -147,9 +149,13 @@ fun CardCursos(nameCurso: String){
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color.Gray)
+                .background(Color.White)
                 .width(55.dp)
                 .height(55.dp)
+                .paint(
+                    painterResource(id = image),
+                    contentScale = ContentScale.Fit
+                )
         )
         Column(
             Modifier.width(300.dp)
@@ -200,12 +206,12 @@ fun PreviewCursp(){
 @Composable
 fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
     val loginViewModel = viewModel<ViewModelSheet>()
-    if (loginViewModel.Sheet.value) {
+    if (loginViewModel.sheet.value) {
         BottomSheet {
-            loginViewModel.Sheet.value = false
+            loginViewModel.sheet.value = false
         }
     }
-    fun asd(){loginViewModel.Sheet.value = true}
+    fun asd(){loginViewModel.sheet.value = true}
     BottomAppBar (
         modifier = Modifier
             .fillMaxWidth()

@@ -31,9 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.primeiroprojeto.ViewModels.ViewModelCurso
-import com.example.primeiroprojeto.ViewModels.ViewModelLogin
-import com.example.primeiroprojeto.ViewModels.ViewModelSheet
+import com.example.primeiroprojeto.viewModels.ViewModelLogin
 
 @Composable
 fun  LogScreen(onScreenCursos: () -> Unit){

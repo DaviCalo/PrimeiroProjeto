@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.primeiroprojeto.ViewModels.ViewModelSheet
+import com.example.primeiroprojeto.viewModels.ViewModelSheet
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 //class BottomSheetClass : ComponentActivity() {
@@ -48,9 +48,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun BottomSheet(){
     val loginViewModel = viewModel<ViewModelSheet>()
 
-    if (loginViewModel.Sheet.value) {
+    if (loginViewModel.sheet.value) {
         BottomSheet {
-            loginViewModel.Sheet.value = false
+            loginViewModel.sheet.value = false
         }
     }
 
@@ -59,7 +59,7 @@ fun BottomSheet(){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { loginViewModel.Sheet.value = true }) {
+        Button(onClick = { loginViewModel.sheet.value = true }) {
             Text(text = "Show BottomSheet")
         }
     }
