@@ -46,18 +46,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
 import com.example.primeiroprojeto.ui.theme.inputBackgroundColor
 import com.example.primeiroprojeto.ui.theme.inputBorderColor
+import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit,){
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
-        bottomBar = { ProfileScreenBottomBar() },
+        bottomBar = { ClassesScreenBottomBarProfile(onScreenCurso, onScreenChat) },
     ) {  _ -> //innerPadding
         Column (modifier = Modifier){
             CustomComponent()
@@ -70,7 +72,7 @@ fun ProfileScreen(){
 @Composable
 fun ProfileScreenPreview(){
     PrimeiroProjetoTheme {
-        ProfileScreen()
+        ProfileScreen({}, {})
         //ContainerCursos()
     }
 }
@@ -366,6 +368,37 @@ fun CardCursos(nameCurso: String){
             }
             Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
 //          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
+        }
+    }
+}
+
+@Composable
+fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
+    val loginViewModel = viewModel<ViewModelSheet>()
+    if (loginViewModel.sheet.value) {
+        BottomSheet {
+            loginViewModel.sheet.value = false
+        }
+    }
+    fun asd(){loginViewModel.sheet.value = true}
+    BottomAppBar (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(width = 2.dp, color = Color.White),
+        containerColor = Color.White
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(15.dp, 0.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularBottomButton(Color.Gray, onScreenCurso)
+            CircularBottomButton(Color.Gray) { asd() }
+            CircularBottomButton(Color.Gray, onScreenChat)
+            CircularBottomButton(Color.Green) {}
         }
     }
 }
