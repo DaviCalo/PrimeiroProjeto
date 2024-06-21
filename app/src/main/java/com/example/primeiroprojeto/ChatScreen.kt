@@ -32,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.primeiroprojeto.ViewModels.ViewModelSheet
-import com.example.primeiroprojeto.ViewModels.ViewModelSup
+import com.example.primeiroprojeto.viewModels.ViewModelSheet
+import com.example.primeiroprojeto.viewModels.ViewModelSup
 
 @Composable
 fun ChatScreen(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
@@ -140,8 +140,8 @@ fun InputScreenBottomBar(){
                 .fillMaxWidth()
                 .padding(top = 4.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
             shape = RoundedCornerShape(50.dp),
-            value = viewModelSup.InputSeach.value,
-            onValueChange = { viewModelSup.InputSeach.value = it },
+            value = viewModelSup.inputSeach.value,
+            onValueChange = { viewModelSup.inputSeach.value = it },
             label = {
                 Text(
                     text = "Message here...",
@@ -167,12 +167,12 @@ fun InputScreenBottomBar(){
 @Composable
 fun ClassesScreenBottomBarChat(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
     val loginViewModel = viewModel<ViewModelSheet>()
-    if (loginViewModel.Sheet.value) {
+    if (loginViewModel.sheet.value) {
         BottomSheet {
-            loginViewModel.Sheet.value = false
+            loginViewModel.sheet.value = false
         }
     }
-    fun asd(){loginViewModel.Sheet.value = true}
+    fun asd(){loginViewModel.sheet.value = true}
     BottomAppBar (
         modifier = Modifier
             .fillMaxWidth()
