@@ -229,7 +229,7 @@ fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -
             CircularBottomButton(Color.Green) {}
             CircularBottomButton(Color.Gray) { asd() }
             CircularBottomButton(Color.Gray, onScreenChat)
-            CircularBottomButton(Color.Gray,onScreenProfile)
+            CircularBottomButton(Color.Gray, onScreenProfile)
         }
     }
 }
