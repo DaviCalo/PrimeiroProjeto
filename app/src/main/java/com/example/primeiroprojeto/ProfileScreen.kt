@@ -309,7 +309,7 @@ fun CustomComponent() {
         ) {
             items(3){
                 if(selectedIndex == 0){
-                    ContainerCursos()
+                    ContainerCursos({})
                 }else{
                     PostProfile()
                 }
