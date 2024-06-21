@@ -56,7 +56,7 @@ import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit,){
+fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBarProfile(onScreenCurso, onScreenChat) },

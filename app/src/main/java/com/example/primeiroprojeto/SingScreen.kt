@@ -60,7 +60,7 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SignScreen() {
+fun SignScreen(onScreenCurso: () -> Unit) {
     val viewModel: ViewModelSign = viewModel()
     val isEmailValid by viewModel.isEmailValid.collectAsState()
     val context = LocalContext.current
@@ -78,7 +78,7 @@ fun SignScreen() {
             CustomSignInputEmail(viewModel)
             CustomSignInputPassword()
             CustomCheckBox()
-            SignUpButton(onClick = { viewModel.validateEmail()})
+            SignUpButton(onScreenCurso)
 
             LaunchedEffect(isEmailValid) {
                 if (!isEmailValid) {
@@ -96,7 +96,7 @@ fun SignScreen() {
 @Composable
 fun SignScreenPreview() {
     PrimeiroProjetoTheme {
-        SignScreen()
+        SignScreen({})
     }
 }
 
@@ -269,7 +269,7 @@ fun CustomCheckBox() {
 }
 
 @Composable
-fun SignUpButton(onClick: () -> Unit) {
+fun SignUpButton(onScreenCurso: () -> Unit) {
     val viewModel: ViewModelSign = viewModel()
     Column (
         modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
@@ -279,7 +279,8 @@ fun SignUpButton(onClick: () -> Unit) {
                 .height(51.dp)
                 .fillMaxWidth()
                 .padding(bottom = 10.dp),
-            onClick = { onClick },
+//            onClick = { {onClick },
+            onClick = { onScreenCurso() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = greenPrimary,
                 contentColor = Color.White
