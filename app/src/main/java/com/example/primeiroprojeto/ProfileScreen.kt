@@ -309,7 +309,7 @@ fun CustomComponent() {
         ) {
             items(3){
                 if(selectedIndex == 0){
-                    ContainerCursosPro()
+                    ContainerCursos()
                 }else{
                     PostProfile()
                 }
@@ -416,6 +416,7 @@ fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
     }
 }
 
+<<<<<<< HEAD
 // CURSOS PARTE
 @Composable
 <<<<<<< HEAD
@@ -466,6 +467,8 @@ fun CardCursos(nameCurso: String){
         }
     }
 }
+=======
+>>>>>>> babb29e (fix bug)
 
 @Composable
 fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
