@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
@@ -35,6 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ViewModels.ViewModelCurso
@@ -120,6 +123,7 @@ fun InputSearch(){
 @Composable
 fun ContainerCursos(){
     val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
+    val imageCursos = arrayOf(R.drawable.java, R.drawable.kotlin, R.drawable.python,R.drawable.go)
     Column(
         Modifier.fillMaxWidth()
     ) {
@@ -144,8 +148,8 @@ fun CardCursos(nameCurso: String){
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color.Gray)
-                .width(50.dp)
-                .height(50.dp)
+                .width(55.dp)
+                .height(55.dp)
         )
         Column(
             Modifier.width(300.dp)
@@ -158,26 +162,29 @@ fun CardCursos(nameCurso: String){
                 Text(text = "8m ago", fontFamily = interMedium, fontSize = 16.sp, color = Color(0xffBDBDBD))
             }
             Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp, color = Color.Gray)
-//          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
         }
     }
 }
 
 @Composable
 fun MiniCards(){
+    val imagenArray = arrayOf(R.drawable.images,R.drawable.duas_formas_de_estudar_programacao_desenvolvimento_software_c_sharp_mcp_1024x554,R.drawable.linguagen_de_programacao_2_shutterstock_1680857539_jpg)
     Column(
         Modifier.fillMaxWidth().padding(15.dp,0.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        repeat(4){
+        for (i in imagenArray){
             Box(
                 modifier = with (Modifier){
                     height(227.dp)
-                    .padding(0.dp, 15.dp)
-                    .width(357.dp)
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(Color.Green)
+                        .padding(0.dp, 15.dp)
+                        .width(357.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                        .paint(
+                            painterResource(id = i),
+                            contentScale = ContentScale.FillBounds
+                        )
                 }
             ) {}
         }
@@ -208,6 +215,7 @@ fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(40.dp)
                 .padding(15.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -224,7 +232,7 @@ fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -
 fun CircularBottomButton(color: Color, onScreen: () -> Unit){
     Button(
         onClick = { onScreen() },
-        modifier = Modifier.size(50.dp),
+        modifier = Modifier.height(30.dp),
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(containerColor = color)
     ){

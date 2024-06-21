@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//val viewModel: TesteViewModel by viewModels()
-//test(viewModel = viewModel)
 @Composable
 fun App() {
     Surface (
@@ -37,7 +35,7 @@ fun App() {
         color = MaterialTheme.colorScheme.onSurface
     ){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "ChatScreen") {
+        NavHost(navController = navController, startDestination = "LogScreen") {
             composable("LogScreen") {
                 LogScreen(
                     onScreenCursos = {
