@@ -2,6 +2,8 @@ package com.example.primeiroprojeto
 
 import ViewModelSign
 import android.annotation.SuppressLint
+import android.view.View
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,9 +31,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -42,6 +48,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
@@ -54,6 +61,10 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignScreen() {
+    val viewModel: ViewModelSign = viewModel()
+    val isEmailValid by viewModel.isEmailValid.collectAsState()
+    val context = LocalContext.current
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -63,12 +74,17 @@ fun SignScreen() {
                 .padding(8.dp)
         ) {
             TopAppBar(title = { SignScreenTopAppBar() })
-            //DictCustomSignInput()
-            CustomSignInput(string = "Name")
-            CustomSignInput(string = "Email")
-            CustomSignInputPassword("Password")
+            CustomSignInputName()
+            CustomSignInputEmail(viewModel)
+            CustomSignInputPassword()
             CustomCheckBox()
-            SignUpButton()
+            SignUpButton(onClick = { viewModel.validateEmail()})
+
+            LaunchedEffect(isEmailValid) {
+                if (!isEmailValid) {
+                    Toast.makeText(context, "Email is invalid", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
@@ -80,7 +96,7 @@ fun SignScreen() {
 @Composable
 fun SignScreenPreview() {
     PrimeiroProjetoTheme {
-        //SignScreen()
+        SignScreen()
     }
 }
 
@@ -122,24 +138,9 @@ fun SignScreenTopAppBar() {
     }
 }
 
-/*
-@Composable
-fun DictCustomSignInput(){
-    val dictionary = mutableMapOf<Int, String>()
-    dictionary[1] = "Name"
-    dictionary[2] = "Email"
-
-    for (inputs in dictionary.entries){
-        val value = dictionary.values
-        val key = dictionary.keys
-        value.toString()
-        CustomSignInput(int = key, string = value)
-    }
-}
-*/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomSignInput(string: String,) {
+fun CustomSignInputName() {
     val stayInput = viewModel<ViewModelSign>()
 
     OutlinedTextField(
@@ -152,11 +153,11 @@ fun CustomSignInput(string: String,) {
             focusedBorderColor = inputBorderColor,
             containerColor = inputBackgroundColor
         ),
-        value = stayInput.inputString.value,
-        onValueChange = { stayInput.inputString.value = it },
+        value = stayInput.inputStringName.value,
+        onValueChange = { stayInput.inputStringName.value = it },
         label = {
             Text(
-                text = string,
+                text = "Name",
                 color = grayPrimary
             )
         },
@@ -166,7 +167,35 @@ fun CustomSignInput(string: String,) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomSignInputPassword(string: String) {
+fun CustomSignInputEmail(viewModelSign: ViewModelSign) {
+    val stayInput by viewModelSign.inputStringEmail.collectAsState()
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            unfocusedBorderColor = inputBorderColor,
+            focusedBorderColor = inputBorderColor,
+            containerColor = inputBackgroundColor
+        ),
+        value = stayInput,
+        onValueChange = { viewModelSign.onEmailChanged(it) },
+        label = {
+            Text(
+                text = "Email",
+                color = grayPrimary
+            )
+        },
+        singleLine = true
+    )
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomSignInputPassword() {
     val textFieldValue = viewModel<ViewModelSign>()
     val passwordVisible = viewModel<ViewModelSign>()
 
@@ -184,7 +213,7 @@ fun CustomSignInputPassword(string: String) {
         onValueChange = { textFieldValue.inputStringPassword.value = it },
         label = {
             Text(
-                text = string,
+                text = "Password",
                 color = grayPrimary
             )
         },
@@ -240,7 +269,8 @@ fun CustomCheckBox() {
 }
 
 @Composable
-fun SignUpButton() {
+fun SignUpButton(onClick: () -> Unit) {
+    val viewModel: ViewModelSign = viewModel()
     Column (
         modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
     ) {
@@ -249,7 +279,7 @@ fun SignUpButton() {
                 .height(51.dp)
                 .fillMaxWidth()
                 .padding(bottom = 10.dp),
-            onClick = { /*TODO*/ },
+            onClick = { onClick },
             colors = ButtonDefaults.buttonColors(
                 containerColor = greenPrimary,
                 contentColor = Color.White
@@ -259,5 +289,3 @@ fun SignUpButton() {
         }
     }
 }
-
-//TODO: FAZER CHECKBOX STYLE AND FINISH sign screen
