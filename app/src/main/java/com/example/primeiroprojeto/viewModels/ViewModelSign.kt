@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 package com.example.primeiroprojeto.ViewModels
 
+=======
+>>>>>>> c718a34 (rebase joao)
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -21,14 +24,19 @@ class ViewModelSign: ViewModel() {
 
     //SIGN SCREEN VAR
     private val _checked = mutableStateOf(true)
+<<<<<<< HEAD
     val checked: MutableState<Boolean> = _checked
 
     private val _inputStringName = mutableStateOf("")
     val inputStringName: MutableState<String> = _inputStringName
+=======
+    private val _inputStringName = mutableStateOf("")
+>>>>>>> c718a34 (rebase joao)
 
     private val _inputStringEmail = MutableStateFlow("")
     val inputStringEmail: StateFlow<String> get() = _inputStringEmail
 
+<<<<<<< HEAD
 
     private val _isEmailValid = MutableStateFlow(true)
     val isEmailValid: StateFlow<Boolean> get() = _isEmailValid
@@ -37,6 +45,19 @@ class ViewModelSign: ViewModel() {
     val inputStringPassword: MutableState<String> = _inputStringPassword
 
     private val _passwordVisibleCheck = mutableStateOf(false)
+=======
+    private val _isEmailValid = MutableStateFlow(true)
+    val isEmailValid: StateFlow<Boolean> get() = _isEmailValid
+
+
+    private val _inputStringPassword = mutableStateOf("")
+    private val _passwordVisibleCheck = mutableStateOf(false)
+
+    val checked: MutableState<Boolean> = _checked
+    val inputStringName: MutableState<String> = _inputStringName
+
+    val inputStringPassword: MutableState<String> = _inputStringPassword
+>>>>>>> c718a34 (rebase joao)
     val passwordVisibleCheck: MutableState<Boolean> = _passwordVisibleCheck
 
     //SIGN SCREEN
