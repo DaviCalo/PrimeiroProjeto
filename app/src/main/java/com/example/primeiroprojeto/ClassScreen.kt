@@ -1,5 +1,6 @@
 package com.example.primeiroprojeto
 
+import ViewModelClass
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,23 +15,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,10 +40,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
@@ -54,24 +54,23 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ClassesScreen(){
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = { ClassesScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBar()},
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .verticalScroll(scrollState) //Quando adiciona, o app fecha
                 .fillMaxSize()
                 .padding(innerPadding)
+
         ) {
             CustomClassesSearchInput(string = "Search")
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(3){
-                    Post()
-                }
-            }
+            Post(classTitle = "Configurando o ambiente Java", classDescription = "Baixando e instalando as ferramentas necessarias", classTime = "51m ago", classId = 1)
+            Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2)
+            Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3)
+
         }
     }
 }
@@ -89,53 +88,59 @@ fun ClassesScreenPreview() {
 
 @Composable
 fun ClassesScreenTopAppBar() {
-    val CustomFontFamily500 = FontFamily(Font(R.font.inter_semibold))
-    Row(
+    val customFontFamily500 = FontFamily(Font(R.font.inter_semibold))
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .systemBarsPadding()
-            .padding(top = 15.dp, start = 8.dp, end = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .background(Color.White),
     ) {
-        ClickableText(
-            text = AnnotatedString(
-                text = stringResource(id = R.string.classes_screen_topbar_back),
-                spanStyles = listOf(
-                    AnnotatedString.Range(
-                        item = SpanStyle(
-                            color = greenPrimary
-                        ),
-                        start = 0,
-                        end = 4,
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .systemBarsPadding()
+                .padding(top = 15.dp, start = 8.dp, end = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ClickableText(
+                text = AnnotatedString(
+                    text = stringResource(id = R.string.classes_screen_topbar_back),
+                    spanStyles = listOf(
+                        AnnotatedString.Range(
+                            item = SpanStyle(
+                                color = greenPrimary
+                            ),
+                            start = 0,
+                            end = 4,
+                        )
                     )
                 )
+            ) {
+            }
+
+            Text(
+                text = stringResource(id = R.string.classes_screen_topbar_name),
+                color = Color.Black,
+                fontFamily = customFontFamily500,
+                fontSize = 24.sp
             )
-        ) {
-        }
 
-        Text(
-            text = stringResource(id = R.string.classes_screen_topbar_name),
-            color = Color.Black,
-            fontFamily = CustomFontFamily500,
-            fontSize = 24.sp
-        )
-
-        ClickableText(
-            text = AnnotatedString(
-                text = stringResource(id = R.string.classes_screen_topbar_filter),
-                spanStyles = listOf(
-                    AnnotatedString.Range(
-                        item = SpanStyle(
-                            color = greenPrimary
-                        ),
-                        start = 0,
-                        end = 6,
+            ClickableText(
+                text = AnnotatedString(
+                    text = stringResource(id = R.string.classes_screen_topbar_filter),
+                    spanStyles = listOf(
+                        AnnotatedString.Range(
+                            item = SpanStyle(
+                                color = greenPrimary
+                            ),
+                            start = 0,
+                            end = 6,
+                        )
                     )
                 )
-            )
-        ) {
+            ) {
 
+            }
         }
     }
 }
@@ -178,8 +183,24 @@ fun CircularBottomButton(color: Color){
     }
 }
 
+//POSTS TODO: viewModel das check box e adicionar o botao final de conclusao do curso
 @Composable
-fun Post(){
+fun Post(classTitle: String, classDescription: String, classTime: String, classId: Int){
+    val checked = viewModel<ViewModelClass>()
+    val title = classTitle
+    val description = classDescription
+    val time = classTime
+    val id = classId
+
+
+    val checkboxColors = CheckboxDefaults.colors(
+        checkedColor = greenPrimary,
+        uncheckedColor = Color.Black,
+        checkmarkColor = Color.Black,
+        disabledIndeterminateColor = Color.Transparent,
+    )
+
+
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -194,25 +215,44 @@ fun Post(){
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_title),
+            text = title,
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_description),
+            text = description,
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_medium)),
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_time),
+            text = time,
             color = grayPrimary,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 14.sp
         )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        //check button
+        Row(
+            modifier = Modifier.padding(top = 5.dp, bottom = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = checked.checkedClassBox.value,
+                onCheckedChange = { checked.checkedClassBox.value = it },
+                colors = checkboxColors,
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.classes_screen_class_check
+                ),
+                color = Color.Black,
+            )
+        }
     }
 }
 
@@ -220,12 +260,7 @@ fun Post(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomClassesSearchInput(string: String) {
-    var texto by remember {
-        mutableStateOf("")
-    }
-    var novoTexto = remember {
-        mutableStateOf(TextFieldValue())
-    }
+    val inputViewModelClass = viewModel<ViewModelClass>()
 
     OutlinedTextField(
         modifier = Modifier
@@ -237,8 +272,8 @@ fun CustomClassesSearchInput(string: String) {
             focusedBorderColor = inputBorderColor,
             containerColor = inputBackgroundColor
         ),
-        value = novoTexto.value,
-        onValueChange = { novoTexto.value = it },
+        value = inputViewModelClass.inputStringClass.value,
+        onValueChange = { inputViewModelClass.inputStringClass.value = it },
         label = {
             Text(
                 text = string,

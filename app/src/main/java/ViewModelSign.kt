@@ -19,22 +19,22 @@ class ViewModelSign: ViewModel() {
 
     //SIGN SCREEN VAR
     private val _checked = mutableStateOf(true)
+    val checked: MutableState<Boolean> = _checked
+
     private val _inputStringName = mutableStateOf("")
+    val inputStringName: MutableState<String> = _inputStringName
 
     private val _inputStringEmail = MutableStateFlow("")
     val inputStringEmail: StateFlow<String> get() = _inputStringEmail
 
+
     private val _isEmailValid = MutableStateFlow(true)
     val isEmailValid: StateFlow<Boolean> get() = _isEmailValid
 
-
     private val _inputStringPassword = mutableStateOf("")
-    private val _passwordVisibleCheck = mutableStateOf(false)
-
-    val checked: MutableState<Boolean> = _checked
-    val inputStringName: MutableState<String> = _inputStringName
-
     val inputStringPassword: MutableState<String> = _inputStringPassword
+
+    private val _passwordVisibleCheck = mutableStateOf(false)
     val passwordVisibleCheck: MutableState<Boolean> = _passwordVisibleCheck
 
     //SIGN SCREEN

@@ -263,21 +263,21 @@ fun PostProfile(){
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_title),
+            text = "Test title",
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_description),
+            text = "test description",
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_medium)),
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.classes_screen_class_time),
+            text = "43m ago",
             color = grayPrimary,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 14.sp
@@ -285,9 +285,11 @@ fun PostProfile(){
     }
 }
 
-//TENTATIVAS DE SWITCH TODO: REMOVE RIPPLE EFFECTS FROM BUTTONS
 @Composable
 fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit){
+
+
+
     Row(
         modifier = Modifier
             .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
