@@ -3,6 +3,7 @@ package com.example.primeiroprojeto
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,7 @@ import com.example.primeiroprojeto.viewModels.ViewModelCurso
 import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @Composable
-fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
+fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit, onScreenClass: () -> Unit){
     Scaffold(
         topBar = { Header("Cursos") },
         bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile) },
@@ -56,7 +57,7 @@ fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit){
                 .padding(innerPadding)
         ) {
             InputSearch()
-            ContainerCursos()
+            ContainerCursos(onScreenClass)
             MiniCards()
         }
     }
@@ -120,7 +121,7 @@ fun InputSearch(){
 }
 
 @Composable
-fun ContainerCursos(){
+fun ContainerCursos(onScreenClass: () -> Unit){
     val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
     val imageCursos = arrayOf(R.drawable.java, R.drawable.kotlin, R.drawable.python,R.drawable.go)
     Column(
@@ -130,19 +131,20 @@ fun ContainerCursos(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         for (i in 0 .. 3){
-            CardCursos(nameCursos[i], imageCursos[i])
+            CardCursos(nameCursos[i], imageCursos[i], onScreenClass)
         }
     }
 }
 
 @Composable
-fun CardCursos(nameCurso: String, image:Int){
+fun CardCursos(nameCurso: String, image:Int, onScreenClass: () -> Unit ){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(15.dp, 10.dp),
+            .padding(15.dp, 10.dp)
+            .clickable { onScreenClass() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
@@ -200,7 +202,7 @@ fun MiniCards(){
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewCursp(){
-    CursosScreem( {}, {} )
+    CursosScreem( {}, {} , {})
 }
 
 @Composable
