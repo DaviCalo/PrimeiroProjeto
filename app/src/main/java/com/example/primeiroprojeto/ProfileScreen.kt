@@ -239,7 +239,7 @@ fun CustomComponent() {
         ) {
             items(3){
                 if(selectedIndex == 0){
-                    ContainerCursosPro()
+                    ContainerCursos()
                 }else{
                     PostProfile()
                 }
@@ -325,52 +325,6 @@ fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
     }
 }
 
-// CURSOS PARTE
-@Composable
-fun ContainerCursosPro(){
-    val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
-    Column(
-        Modifier.fillMaxWidth()
-    ) {
-        for (name in nameCursos){
-            CardCursos(name)
-        }
-    }
-}
-
-@Composable
-fun CardCursos(nameCurso: String){
-    val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
-    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(15.dp, 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color.Gray)
-                .width(50.dp)
-                .height(50.dp)
-        )
-        Column(
-            Modifier.width(300.dp)
-        ) {
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = nameCurso, fontFamily = interSemiBlod, fontSize = 16.sp)
-                Text(text = "8m ago", fontFamily = interMedium, fontSize = 16.sp, color = Color(0xffBDBDBD))
-            }
-            Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
-//          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
-        }
-    }
-}
 
 @Composable
 fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
