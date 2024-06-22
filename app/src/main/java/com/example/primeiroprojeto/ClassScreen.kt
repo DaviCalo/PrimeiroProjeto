@@ -74,10 +74,15 @@ fun ClassesScreen(){
             Post(classTitle = "Configurando o ambiente Java", classDescription = "Baixando e instalando as ferramentas necessarias", classTime = "51m ago", classId = 1, isChecked = checkboxStates.value[1] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(1, isChecked)})
             Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2, isChecked = checkboxStates.value[2] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(2, isChecked)})
             Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3, isChecked = checkboxStates.value[3] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(3, isChecked)})
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+            finishCourseButton()
+            /*
             if (allChecked){
-                finishCourseButton()
+            }else{
+                Text(text = "Conclua todas as aulas primeiro")
             }
+
+             */
         }
     }
 }
@@ -292,10 +297,15 @@ fun CustomClassesSearchInput(string: String) {
 
 @Composable
 fun finishCourseButton(){
-    Button(colors = ButtonDefaults.buttonColors(greenPrimary),
-        onClick = { /*TODO: AÇAO PARA CONCLUIR O CURSO*/ },
-        modifier = Modifier
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Concluir curso")
+        Button(colors = ButtonDefaults.buttonColors(greenPrimary),
+            onClick = { /*TODO: AÇAO PARA CONCLUIR O CURSO*/ },
+            modifier = Modifier.padding(bottom = 8.dp)
+        ) {
+            Text(text = "Concluir curso")
+        }
     }
 }

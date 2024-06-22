@@ -1,5 +1,6 @@
 package com.example.primeiroprojeto
 
+import ViewModelProfile
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,10 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
@@ -55,11 +58,16 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(){
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
         bottomBar = { ProfileScreenBottomBar() },
     ) {  _ -> //innerPadding
-        Column (modifier = Modifier){
+        Column (
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .fillMaxSize()
+        ) {
             CustomComponent()
         }
     }
@@ -81,8 +89,9 @@ fun ProfileScreenTopAppBar() {
     Box (
         modifier = Modifier
             .fillMaxWidth()
-            .systemBarsPadding()
             .background(greenPrimary)
+            .systemBarsPadding()
+
     ){
         Row(
             modifier = Modifier
@@ -174,9 +183,9 @@ fun ProfileCircularBottomButton(color: Color){
 
 @Composable
 fun CustomComponent() {
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
+    val viewModelProfile = viewModel<ViewModelProfile>()
+    val selectedIndex by viewModelProfile.selectedIndex
+
 
     Column (
         modifier = Modifier
@@ -228,20 +237,20 @@ fun CustomComponent() {
                 .fillMaxWidth()
         )
         //switch button
-        DoubleSwitchButton(selectedIndex){
-            newIndex -> selectedIndex = newIndex
-        }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            items(3){
-                if(selectedIndex == 0){
-                    ContainerCursos()
-                }else{
-                    PostProfile()
-                }
-            }
+        DoubleSwitchButton(
+            selectedIndex = selectedIndex,
+            onSelectedIndexChange = viewModelProfile::setSelectedIndex
+        )
+
+        if(selectedIndex == 0){
+            ContainerCursos()
+            ContainerCursos()
+            ContainerCursos()
+
+        }else{
+            PostProfile()
+            PostProfile()
+            PostProfile()
         }
     }
 }
@@ -286,9 +295,9 @@ fun PostProfile(){
 }
 
 @Composable
-fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit){
-
-
+fun DoubleSwitchButton(
+    selectedIndex: Int,
+    onSelectedIndexChange: (Int) -> Unit){
 
     Row(
         modifier = Modifier

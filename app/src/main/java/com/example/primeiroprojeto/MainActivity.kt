@@ -22,8 +22,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             PrimeiroProjetoTheme {
                 //SignScreen()
-                //ProfileScreen()
-                ClassesScreen()
+                ProfileScreen()
+                //ClassesScreen()
             }
         }
     }
