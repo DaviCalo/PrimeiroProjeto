@@ -31,6 +31,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -55,6 +56,9 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 @Composable
 fun ClassesScreen(){
     val scrollState = rememberScrollState()
+    val viewModel: ViewModelClass = viewModel()
+    val checkboxStates = viewModel.checkedClassBox.observeAsState(initial = emptyMap<Int, Boolean>())
+    val allChecked = viewModel.areAllCkeckBoxesChecked()
     Scaffold(
         topBar = { ClassesScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBar()},
@@ -67,10 +71,13 @@ fun ClassesScreen(){
 
         ) {
             CustomClassesSearchInput(string = "Search")
-            Post(classTitle = "Configurando o ambiente Java", classDescription = "Baixando e instalando as ferramentas necessarias", classTime = "51m ago", classId = 1)
-            Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2)
-            Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3)
-
+            Post(classTitle = "Configurando o ambiente Java", classDescription = "Baixando e instalando as ferramentas necessarias", classTime = "51m ago", classId = 1, isChecked = checkboxStates.value[1] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(1, isChecked)})
+            Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2, isChecked = checkboxStates.value[2] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(2, isChecked)})
+            Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3, isChecked = checkboxStates.value[3] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(3, isChecked)})
+            Spacer(modifier = Modifier.height(16.dp))
+            if (allChecked){
+                finishCourseButton()
+            }
         }
     }
 }
@@ -82,7 +89,7 @@ fun ClassesScreen(){
 @Composable
 fun ClassesScreenPreview() {
     PrimeiroProjetoTheme {
-        ClassesScreen()
+        finishCourseButton()
     }
 }
 
@@ -185,8 +192,7 @@ fun CircularBottomButton(color: Color){
 
 //POSTS TODO: viewModel das check box e adicionar o botao final de conclusao do curso
 @Composable
-fun Post(classTitle: String, classDescription: String, classTime: String, classId: Int){
-    val checked = viewModel<ViewModelClass>()
+fun Post(classTitle: String, classDescription: String, classTime: String, classId: Int, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit){
     val title = classTitle
     val description = classDescription
     val time = classTime
@@ -242,8 +248,8 @@ fun Post(classTitle: String, classDescription: String, classTime: String, classI
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
-                checked = checked.checkedClassBox.value,
-                onCheckedChange = { checked.checkedClassBox.value = it },
+                checked = isChecked,
+                onCheckedChange = { onCheckedChange(it) },
                 colors = checkboxColors,
             )
             Text(
@@ -282,4 +288,14 @@ fun CustomClassesSearchInput(string: String) {
         },
         singleLine = true
     )
+}
+
+@Composable
+fun finishCourseButton(){
+    Button(colors = ButtonDefaults.buttonColors(greenPrimary),
+        onClick = { /*TODO: AÇAO PARA CONCLUIR O CURSO*/ },
+        modifier = Modifier
+    ) {
+        Text(text = "Concluir curso")
+    }
 }
