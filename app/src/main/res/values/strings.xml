@@ -3,6 +3,25 @@
 
     <!-- SIGN SCREEN STRINGS -->
     <string name="sign_screen_topbar_name">Sign Up</string>
-    <string name="sign_screen_topbar_login">Login</string>
     <string name="sign_screen_check_box">I would like to receive your newsletter and other promotional information.</string>
+    <string name="sign_screen_topbar_login">Login</string>
+    <string name="sign_screen_lost">Forgotten your password?</string>
+
+    <!-- CLASSS SCREEN STRINGS -->
+    <string name="classes_screen_topbar_back">Back</string>
+    <string name="classes_screen_topbar_name">Aulas</string>
+    <string name="classes_screen_topbar_filter">Filter</string>
+    <string name="classes_screen_class_title">Header</string>
+    <string name="classes_screen_class_description">He\'ll want to use your yacht, and I don\'t want this thing smelling like fish.</string>
+    <string name="classes_screen_class_time">8m ago</string>
+
+    <!-- PROFILE SCREEN STRINGS -->
+    <string name="profile_screen_topbar_settings">Settings</string>
+    <string name="profile_screen_topbar_name">Profile</string>
+    <string name="profile_screen_topbar_logout">Logout</string>
+    <string name="profile_screen_image_name">Victoria Robertson</string>
+    <string name="profile_screen_image_mantra">A mantra goes here</string>
+
+
+
 </resources>
