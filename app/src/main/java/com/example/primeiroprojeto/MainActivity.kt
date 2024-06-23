@@ -48,7 +48,7 @@ fun App() {
             composable("CursoScreen"){
                 CursosScreem(
                     onScreenChat =  {navController.navigate(("ChatScreen"))},
-                    onScreenProfile = {navController.navigate(("ProfilScreene"))},
+                    onScreenProfile = {navController.navigate(("ProfileScreen"))},
                     onScreenClass = {navController.navigate(("ClasseScreen"))}
                 )
             }
@@ -69,7 +69,7 @@ fun App() {
             composable("ClasseScreen"){
                 ClassesScreen(
                     onScreenChat =  {navController.navigate(("ChatScreen"))},
-                    onScreenProfile = {navController.navigate(("ProfilScreene"))},
+                    onScreenProfile = {navController.navigate(("ProfileScreen"))},
                     onScreenConclude = {navController.navigate(("CongratulationsScreen"))}
                 )
             }
@@ -80,6 +80,7 @@ fun App() {
                     onScreenChat =  {navController.navigate(("ChatScreen"))},
                 )
             }
+
         }
     }
 }

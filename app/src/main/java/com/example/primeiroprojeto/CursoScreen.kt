@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -38,16 +40,22 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ui.theme.greenPrimary
 import com.example.primeiroprojeto.viewModels.ViewModelCurso
 import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @Composable
 fun CursosScreem(onScreenChat: () -> Unit, onScreenProfile: () -> Unit, onScreenClass: () -> Unit){
+
     Scaffold(
         topBar = { Header("Cursos") },
         bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile) },
+        modifier = Modifier.systemBarsPadding()
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -71,21 +79,15 @@ fun Header(title: String){
         Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(0.dp, 25.dp, 0.dp, 0.dp),
+            .padding(16.dp, 10.dp, 16.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffffffff))
-        ) {
-            Text(text = "Back", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
-        }
+        Text(text = stringResource(id = R.string.screen_topbar_back), fontFamily = interMedium, fontSize = 16.sp, color = greenPrimary)
 
         Text(text = title, fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = Color.Black )
 
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffffffff))
-        ) {
-            Text(text = "Filter", color = Color(0xff5DB075), fontSize = 16.sp, fontFamily = interMedium)
-        }
+        Text(text = stringResource(id = R.string.screen_topbar_filter), fontFamily = interMedium, fontSize = 16.sp, color = greenPrimary)
     }
 }
 
@@ -97,15 +99,14 @@ fun InputSearch(){
 
     Row(
         Modifier
-            .fillMaxWidth()
-            .padding(0.dp, 20.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp, 0.dp),
+                .padding(top = 4.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
             shape = RoundedCornerShape(50),
             value =  viewModelCursos.search.value,
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -125,8 +126,7 @@ fun ContainerCursos(onScreenClass: () -> Unit){
     val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
     val imageCursos = arrayOf(R.drawable.java, R.drawable.kotlin, R.drawable.python,R.drawable.go)
     Column(
-        Modifier.fillMaxWidth()
-                .fillMaxSize(),
+        Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -143,7 +143,7 @@ fun CardCursos(nameCurso: String, image:Int, onScreenClass: () -> Unit ){
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(15.dp, 10.dp)
+            .padding(16.dp, 10.dp)
             .clickable { onScreenClass() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp)
@@ -178,7 +178,9 @@ fun CardCursos(nameCurso: String, image:Int, onScreenClass: () -> Unit ){
 fun MiniCards(){
     val imagenArray = arrayOf(R.drawable.images,R.drawable.duas_formas_de_estudar_programacao_desenvolvimento_software_c_sharp_mcp_1024x554,R.drawable.linguagen_de_programacao_2_shutterstock_1680857539_jpg)
     Column(
-        Modifier.fillMaxWidth().padding(15.dp,0.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(15.dp, 0.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -201,7 +203,7 @@ fun MiniCards(){
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewCursp(){
+fun PreviewCurso(){
     CursosScreem( {}, {} , {})
 }
 
@@ -224,11 +226,11 @@ fun ClassesScreenBottomBarCursos(onScreenChat: () -> Unit, onScreenProfile: () -
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)
-                .padding(15.dp, 0.dp),
+                .padding(16.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularBottomButton(Color.Green) {}
+            CircularBottomButton(Color(0xff5DB075)) {}
             CircularBottomButton(Color.Gray) { asd() }
             CircularBottomButton(Color.Gray, onScreenChat)
             CircularBottomButton(Color.Gray, onScreenProfile)

@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -24,11 +27,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,6 +45,7 @@ fun ChatScreen(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
     Scaffold(
     topBar = { Header("Suporte") },
     bottomBar = { ClassesScreenBottomBarChat(onScreenCurso, onScreenProfile) },
+    modifier = Modifier.systemBarsPadding()
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -57,7 +63,7 @@ fun ChatScreen(onScreenCurso: () -> Unit, onScreenProfile: () -> Unit){
 @Composable
 fun MessagesComposable(){
     Column(
-        Modifier.padding(20.dp).verticalScroll(rememberScrollState())
+        Modifier.padding(16.dp).verticalScroll(rememberScrollState()),
     ) {
         repeat(2){
             MessageCard("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
@@ -128,6 +134,7 @@ fun MessageCardAnother(message: String){
         }
 }}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputScreenBottomBar(){
     val viewModelSup = viewModel<ViewModelSup>()
@@ -138,7 +145,7 @@ fun InputScreenBottomBar(){
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
+                .padding(top = 4.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
             shape = RoundedCornerShape(50.dp),
             value = viewModelSup.inputSeach.value,
             onValueChange = { viewModelSup.inputSeach.value = it },
@@ -150,8 +157,12 @@ fun InputScreenBottomBar(){
                     color = Color(0xffBDBDBD)
                 )
             },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = Color(0xffE8E8E8),
+                focusedBorderColor = Color(0xff5DB075),
+                containerColor = Color(0xffF6F6F6),
+            ),
             trailingIcon = {
-//                   IconButton(onClick = { /*TODO*/ }) {}
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
@@ -182,20 +193,20 @@ fun ClassesScreenBottomBarChat(onScreenCurso: () -> Unit, onScreenProfile: () ->
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp, 0.dp),
+                .padding(16.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             CircularBottomButton(Color.Gray,onScreenCurso)
             CircularBottomButton(Color.Gray) {asd()}
-            CircularBottomButton(Color.Green){}
+            CircularBottomButton(Color(0xff5DB075)){}
             CircularBottomButton(Color.Gray,onScreenProfile)
         }
     }
 }
 
-//@Preview
-//@Composable
-//fun Asdasd(){
-//    ChatScreen({}, {}, { })
-//}
+@Preview
+@Composable
+fun PreviewChat(){
+    ChatScreen({}, {})
+}

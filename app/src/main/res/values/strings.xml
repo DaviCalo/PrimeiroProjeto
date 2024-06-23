@@ -15,7 +15,7 @@
 
 
     <string name="classes_screen_class_time">8m ago</string>
-    <string name="classes_screen_class_check">Concluir Aula</string>
+    <string name="classes_screen_class_check">Concluir aula</string>
 
 
     <!-- PROFILE SCREEN STRINGS -->
@@ -25,6 +25,8 @@
     <string name="profile_screen_image_name">Victoria Robertson</string>
     <string name="profile_screen_image_mantra">A mantra goes here</string>
 
-
+    <!-- TOPBAR SCREEN STRINGS -->
+    <string name="screen_topbar_back">Back</string>
+    <string name="screen_topbar_filter">Filter</string>
 
 </resources>

@@ -60,138 +60,29 @@ fun ClassesScreen( onScreenChat: () -> Unit, onScreenProfile: () -> Unit, onScre
     val checkboxStates = viewModel.checkedClassBox.observeAsState(initial = emptyMap<Int, Boolean>())
     val allChecked = viewModel.areAllCkeckBoxesChecked()
     Scaffold(
-        topBar = { ClassesScreenTopAppBar() },
+        topBar = { Header("Aulas") },
         bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile) },
+        modifier = Modifier.systemBarsPadding()
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState) //Quando adiciona, o app fecha
                 .fillMaxSize()
                 .padding(innerPadding)
-
+                .padding(16.dp, 0.dp)
         ) {
             CustomClassesSearchInput(string = "Search")
             Post(classTitle = "Configurando o ambiente Java", classDescription = "Baixando e instalando as ferramentas necessarias", classTime = "51m ago", classId = 1, isChecked = checkboxStates.value[1] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(1, isChecked)})
-            Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2, isChecked = checkboxStates.value[2] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(2, isChecked)})
-            Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3, isChecked = checkboxStates.value[3] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(3, isChecked)})
+//            Post(classTitle = "Variaveis em Java", classDescription = "Conheça as variaveis que iremos usar", classTime = "39m ago", classId = 2, isChecked = checkboxStates.value[2] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(2, isChecked)})
+//            Post(classTitle = "Funcoes em Java", classDescription = "Aprenda a usar funcoes em Java", classTime = "4m ago", classId = 3, isChecked = checkboxStates.value[3] ?: false, onCheckedChange = {isChecked -> viewModel.onCheckBoxClicked(3, isChecked)})
             Spacer(modifier = Modifier.height(12.dp))
-            finishCourseButton(onScreenConclude)
-            /*
-            if (allChecked){
-            }else{
-                Text(text = "Conclua todas as aulas primeiro")
-            }
 
-             */
+//            if (allChecked){
+//                FinishCourseButton(onScreenConclude)
+//            }else{
+//                Text(text = "Conclua todas as aulas para ganhar o certificado", fontSize = 16.sp, fontFamily = FontFamily(Font(R.font.inter_medium)))
+//            }
         }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun ClassesScreenPreview() {
-    PrimeiroProjetoTheme {
-        ClassesScreen({}, {}, {})
-    }
-}
-
-@Composable
-fun ClassesScreenTopAppBar() {
-    val customFontFamily500 = FontFamily(Font(R.font.inter_semibold))
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .systemBarsPadding()
-                .padding(top = 15.dp, start = 8.dp, end = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ClickableText(
-                text = AnnotatedString(
-                    text = stringResource(id = R.string.classes_screen_topbar_back),
-                    spanStyles = listOf(
-                        AnnotatedString.Range(
-                            item = SpanStyle(
-                                color = greenPrimary
-                            ),
-                            start = 0,
-                            end = 4,
-                        )
-                    )
-                )
-            ) {
-            }
-
-            Text(
-                text = stringResource(id = R.string.classes_screen_topbar_name),
-                color = Color.Black,
-                fontFamily = customFontFamily500,
-                fontSize = 24.sp
-            )
-
-            ClickableText(
-                text = AnnotatedString(
-                    text = stringResource(id = R.string.classes_screen_topbar_filter),
-                    spanStyles = listOf(
-                        AnnotatedString.Range(
-                            item = SpanStyle(
-                                color = greenPrimary
-                            ),
-                            start = 0,
-                            end = 6,
-                        )
-                    )
-                )
-            ) {
-
-            }
-        }
-    }
-}
-
-@Composable
-fun ClassesScreenBottomBar(){
-    BottomAppBar (
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(width = 2.dp, color = inputBorderColor),
-        containerColor = Color.White
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CircularBottomButton(greenPrimary)
-            repeat(4){
-                CircularBottomButton(inputBorderColor)
-            } //pode usar isso para repetir algo varias vezes
-
-
-        }
-    }
-}
-
-@Composable
-fun CircularBottomButton(color: Color){
-    Button(
-        onClick = {/*TODO*/},
-        modifier = Modifier
-            .size(50.dp),
-        shape = CircleShape,
-        colors = ButtonDefaults.buttonColors(containerColor = color)
-    ){
-        /* Pode adicionar text no button por aqui*/
     }
 }
 
@@ -215,7 +106,7 @@ fun Post(classTitle: String, classDescription: String, classTime: String, classI
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
+            .padding(top = 5.dp, start = 0.dp, end = 0.dp, bottom = 8.dp)
     ) {
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -238,32 +129,36 @@ fun Post(classTitle: String, classDescription: String, classTime: String, classI
             fontFamily = FontFamily(Font(R.font.inter_medium)),
             fontSize = 16.sp
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = time,
-            color = grayPrimary,
-            fontFamily = FontFamily(Font(R.font.inter_semibold)),
-            fontSize = 14.sp
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        //check button
         Row(
-            modifier = Modifier.padding(top = 5.dp, bottom = 10.dp),
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = isChecked,
-                onCheckedChange = { onCheckedChange(it) },
-                colors = checkboxColors,
-            )
+        ){
+            //check button
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Checkbox(
+                    checked = isChecked,
+                    onCheckedChange = { onCheckedChange(it) },
+                    colors = checkboxColors,
+                )
+                Text(
+                    text = stringResource(id = R.string.classes_screen_class_check),
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(R.font.inter_medium)),
+                    fontSize = 16.sp
+                )
+            }
             Text(
-                text = stringResource(
-                    id = R.string.classes_screen_class_check
-                ),
-                color = Color.Black,
+                text = time,
+                color = grayPrimary,
+                fontFamily = FontFamily(Font(R.font.inter_semibold)),
+                fontSize = 14.sp
             )
         }
+//        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
@@ -276,7 +171,7 @@ fun CustomClassesSearchInput(string: String) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
+            .padding(top = 4.dp, bottom = 16.dp, start = 0.dp, end = 0.dp),
         shape = RoundedCornerShape(50.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = inputBorderColor,
@@ -296,7 +191,7 @@ fun CustomClassesSearchInput(string: String) {
 }
 
 @Composable
-fun finishCourseButton(onScreenConclude: () -> Unit){
+fun FinishCourseButton(onScreenConclude: () -> Unit){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -307,5 +202,16 @@ fun finishCourseButton(onScreenConclude: () -> Unit){
         ) {
             Text(text = "Concluir curso")
         }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun ClassesScreenPreview() {
+    PrimeiroProjetoTheme {
+        ClassesScreen({}, {}, {})
     }
 }

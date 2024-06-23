@@ -56,10 +56,11 @@ import com.example.primeiroprojeto.viewModels.ViewModelSheet
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
-    val scrollState = rememberScrollState()
+//    val scrollState = rememberScrollState()
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBarProfile(onScreenCurso, onScreenChat) },
+        modifier = Modifier.systemBarsPadding()
     ) {  _ -> //innerPadding
         Column (
             modifier = Modifier
@@ -72,71 +73,64 @@ fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ProfileScreenPreview(){
-    PrimeiroProjetoTheme {
-        ProfileScreen({}, {})
-    }
-}
-
 @Composable
 fun ProfileScreenTopAppBar() {
     val customFontFamily500 = FontFamily(Font(R.font.inter_semibold))
-    Box (
+    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(greenPrimary)
-            .systemBarsPadding()
-
-    ){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = greenPrimary)
-                .padding(top = 15.dp, bottom = 15.dp, start = 8.dp, end = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ClickableText(
-                text = AnnotatedString(
-                    text = stringResource(id = R.string.profile_screen_topbar_settings),
-                    spanStyles = listOf(
-                        AnnotatedString.Range(
-                            item = SpanStyle(
-                                color = Color.White
-                            ),
-                            start = 0,
-                            end = 8,
-                        )
+            .background(color = greenPrimary)
+            .padding(top = 10.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ClickableText(
+            style = androidx.compose.ui.text.TextStyle(
+                fontFamily = interMedium,
+                fontSize = 16.sp
+            ),
+            text = AnnotatedString(
+                text = stringResource(id = R.string.profile_screen_topbar_settings),
+                spanStyles = listOf(
+                    AnnotatedString.Range(
+                        item = SpanStyle(
+                            color = Color.White
+                        ),
+                        start = 0,
+                        end = 8,
                     )
                 )
-            ) {
-            }
-
-            Text(
-                text = stringResource(id = R.string.profile_screen_topbar_name),
-                color = Color.White,
-                fontFamily = customFontFamily500,
-                fontSize = 24.sp
             )
+        ) {
+        }
 
-            ClickableText(
-                text = AnnotatedString(
-                    text = stringResource(id = R.string.profile_screen_topbar_logout),
-                    spanStyles = listOf(
-                        AnnotatedString.Range(
-                            item = SpanStyle(
-                                color = Color.White
-                            ),
-                            start = 0,
-                            end = 6,
-                        )
+        Text(
+            text = stringResource(id = R.string.profile_screen_topbar_name),
+            color = Color.White,
+            fontFamily = customFontFamily500,
+            fontSize = 30.sp
+        )
+
+        ClickableText(
+            style = androidx.compose.ui.text.TextStyle(
+                fontFamily = interMedium,
+                fontSize = 16.sp
+            ),
+            text = AnnotatedString(
+                text = stringResource(id = R.string.profile_screen_topbar_logout),
+                spanStyles = listOf(
+                    AnnotatedString.Range(
+                        item = SpanStyle(
+                            color = Color.White
+                        ),
+                        start = 0,
+                        end = 6,
                     )
                 )
-            ) {
+            )
+        ) {
 
-            }
         }
     }
 }
@@ -161,14 +155,14 @@ fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () ->
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)
-                .padding(15.dp, 0.dp),
+                .padding(16.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             CircularBottomButton(Color.Gray, onScreenCurso)
             CircularBottomButton(Color.Gray) { asd() }
             CircularBottomButton(Color.Gray, onScreenChat)
-            CircularBottomButton(Color.Green) {}
+            CircularBottomButton(Color(0xff5DB075)) {}
         }
     }
 }
@@ -188,7 +182,7 @@ fun CustomComponent() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(210.dp)
                 .background(greenPrimary)
         ) {
             // White box
@@ -238,6 +232,7 @@ fun CustomComponent() {
             Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()
         ) {
             if(selectedIndex == 0){
+//                ContainerCursos({})
                 ContainerCursos({})
                 ContainerCursos({})
             }else{
@@ -254,7 +249,7 @@ fun PostProfile(){
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp),
     ) {
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -309,7 +304,7 @@ fun DoubleSwitchButton(
             shape = RoundedCornerShape(50),
             elevation = ButtonDefaults.elevatedButtonElevation(0.dp)
         ){
-            Text(text = "Cursos")
+            Text(text = "Cursos", fontSize = 15.sp, fontFamily = FontFamily(Font(R.font.inter_semibold)))
         }
 
         Button(
@@ -322,54 +317,15 @@ fun DoubleSwitchButton(
             shape = RoundedCornerShape(50),
             elevation = ButtonDefaults.elevatedButtonElevation(0.dp)
         ){
-            Text(text = "Certificados")
+            Text(text = "Certificados", fontSize = 15.sp, fontFamily = FontFamily(Font(R.font.inter_semibold)))
         }
     }
 }
 
-// CURSOS PARTE
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ContainerCursos(){
-    val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
-    Column(
-        Modifier.fillMaxWidth()
-    ) {
-        for (name in nameCursos){
-            CardCursos(name)
-        }
-    }
-}
-
-@Composable
-fun CardCursos(nameCurso: String){
-    val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
-    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(15.dp, 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color.Gray)
-                .width(50.dp)
-                .height(50.dp)
-        )
-        Column(
-            Modifier.width(300.dp)
-        ) {
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = nameCurso, fontFamily = interSemiBlod, fontSize = 16.sp)
-                Text(text = "8m ago", fontFamily = interMedium, fontSize = 16.sp, color = Color(0xffBDBDBD))
-            }
-            Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
-//          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
-        }
+fun ProfileScreenPreview(){
+    PrimeiroProjetoTheme {
+        ProfileScreen({}, {})
     }
 }

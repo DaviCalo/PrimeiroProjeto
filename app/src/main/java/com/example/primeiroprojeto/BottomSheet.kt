@@ -28,22 +28,6 @@ import androidx.compose.ui.unit.sp
 import com.example.primeiroprojeto.viewModels.ViewModelSheet
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-//class BottomSheetClass : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            PrimeiroProjetoTheme{
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = Color.White
-//                ) {
-//                    BottomSheet()
-//                }
-//            }
-//        }
-//    }
-//}
-
 @Composable
 fun BottomSheet(){
     val loginViewModel = viewModel<ViewModelSheet>()

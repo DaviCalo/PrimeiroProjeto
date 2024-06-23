@@ -6,16 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.regex.Pattern
 
 class ViewModelSign: ViewModel() {
-    private val _count = mutableStateOf(0)
-    val count: MutableState<Int> = _count
-    fun increment(){
-        count.value++
-    }
-    fun decrement(){
-        count.value--
-    }
-
-
     //SIGN SCREEN VAR
     private val _checked = mutableStateOf(true)
     val checked: MutableState<Boolean> = _checked

@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -28,9 +29,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.primeiroprojeto.ui.theme.greenPrimary
 import com.example.primeiroprojeto.viewModels.ViewModelLogin
 
 @Composable
@@ -58,24 +63,24 @@ fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
     val loginViewModel = viewModel<ViewModelLogin>()
 
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
-    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.SemiBold))
+    val interMedium = FontFamily(Font(R.font.inter_medium, FontWeight.Medium))
 
     Column(
         Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.spacedBy(35.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
             Modifier
                 .fillMaxWidth()
-                .padding(20.dp, 25.dp, 20.dp, 0.dp),
+                .padding(16.dp, 12.dp, 16.dp, 0.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(0.dp, 12.dp,0.dp,12.dp),
                 shape = RoundedCornerShape(10),
                 value = loginViewModel.logEmail.value,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -91,13 +96,31 @@ fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10),
                 trailingIcon = {
-                    ClickableText(
-                        modifier = Modifier.padding(end = 15.dp),
-                        text = AnnotatedString("Show"),
-                        onClick = {  }
-                    )
-//                    Text(text = "Show", color = Color(0xFF5DB075), fontSize = 16.sp, fontFamily = interMedium)
+                    if(!loginViewModel.passwordVisibleCheck.value){
+                        ClickableText(
+                            modifier = Modifier.padding(end = 15.dp),
+                            text = AnnotatedString("Show"),
+                            onClick = { loginViewModel.passwordVisibleCheck.value = !loginViewModel.passwordVisibleCheck.value },
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontFamily = interMedium,
+                                fontSize = 16.sp,
+                                color = greenPrimary
+                            )
+                        )
+                    }else{
+                        ClickableText(
+                            modifier = Modifier.padding(end = 15.dp),
+                            text = AnnotatedString("Hide"),
+                            onClick = { loginViewModel.passwordVisibleCheck.value = !loginViewModel.passwordVisibleCheck.value },
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontFamily = interMedium,
+                                fontSize = 16.sp,
+                                color = greenPrimary
+                            )
+                        )
+                    }
                 },
+                visualTransformation = if (loginViewModel.passwordVisibleCheck.value) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color(0xffE8E8E8),
                     focusedBorderColor = Color(0xff5DB075),
@@ -116,15 +139,15 @@ fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
         }
 
         Column(
-            Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(onClick = { onScreenCurso() },
                 Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
-                    .padding(15.dp, 0.dp), colors = ButtonDefaults.buttonColors(
+                    .height(51.dp)
+                    .padding(16.dp, 0.dp), colors = ButtonDefaults.buttonColors(
                     Color(0xFF5DB075)
                 )) {
                 Text(text = "Log In",  fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Color.White)
@@ -132,8 +155,8 @@ fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
             Button(onClick = {  onScreenSign() },
                 Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
-                    .padding(15.dp, 5.dp), colors = ButtonDefaults.buttonColors(
+                    .height(51.dp)
+                    .padding(16.dp, 0.dp), colors = ButtonDefaults.buttonColors(
                     Color(0xFF5DB075)
                 )) {
                 Text(text = "Sign Up",  fontFamily = interSemiBlod, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Color.White)
@@ -143,8 +166,8 @@ fun Forms(onScreenCurso: () -> Unit, onScreenSign: () -> Unit ){
     }
 }
 
-//@Preview(showSystemUi = true)
-//@Composable
-//fun asd(){
-//    LogScreen(Unit)
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun Previewlog(){
+    LogScreen({}, {})
+}

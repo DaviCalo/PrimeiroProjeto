@@ -18,4 +18,7 @@ class ViewModelLogin: ViewModel() {
     fun changePassword(password: String){
         logPassword.value = password
     }
+
+    private val _passwordVisibleCheck = mutableStateOf(false)
+    val passwordVisibleCheck: MutableState<Boolean> = _passwordVisibleCheck
 }
