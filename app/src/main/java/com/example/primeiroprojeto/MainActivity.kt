@@ -61,11 +61,17 @@ fun App() {
             }
 
             composable("CongratulationsScreen"){
-                CongratulationsScreen()
+                CongratulationsScreen(
+                    onScreenCurso = {navController.navigate(("CursoScreen"))}
+                )
             }
 
             composable("ClasseScreen"){
-               ClassesScreen()
+               ClassesScreen(
+                   onScreenChat =  {navController.navigate(("ChatScreen"))},
+                   onScreenProfile = {navController.navigate(("ProfilScreene"))},
+                   onScreenConclude = {navController.navigate(("CongratulationsScreen"))}
+               )
             }
 
             composable("ProfileScreen"){

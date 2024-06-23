@@ -1,9 +1,6 @@
 package com.example.primeiroprojeto
 
-<<<<<<< HEAD
-import com.example.primeiroprojeto.ViewModels.ViewModelProfile
-=======
->>>>>>> c718a34 (rebase joao)
+import ViewModelProfile
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,18 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-<<<<<<< HEAD
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
-=======
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
->>>>>>> c718a34 (rebase joao)
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,12 +30,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-<<<<<<< HEAD
-=======
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
->>>>>>> c718a34 (rebase joao)
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,14 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-<<<<<<< HEAD
-<<<<<<< HEAD
 import androidx.lifecycle.viewmodel.compose.viewModel
-=======
->>>>>>> c718a34 (rebase joao)
-=======
-import androidx.lifecycle.viewmodel.compose.viewModel
->>>>>>> e1b0679 (fix bug rebase joao)
 import com.example.primeiroprojeto.ui.theme.PrimeiroProjetoTheme
 import com.example.primeiroprojeto.ui.theme.grayPrimary
 import com.example.primeiroprojeto.ui.theme.greenPrimary
@@ -78,32 +55,17 @@ import com.example.primeiroprojeto.viewModels.ViewModelSheet
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-<<<<<<< HEAD
-<<<<<<< HEAD
-fun ProfileScreen(){
-<<<<<<< HEAD
-    val scrollState = rememberScrollState()
-=======
->>>>>>> c718a34 (rebase joao)
-=======
-fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit,){
->>>>>>> e1b0679 (fix bug rebase joao)
-=======
 fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
->>>>>>> 6b959e8 (nav feito)
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = { ProfileScreenTopAppBar() },
         bottomBar = { ClassesScreenBottomBarProfile(onScreenCurso, onScreenChat) },
     ) {  _ -> //innerPadding
-<<<<<<< HEAD
         Column (
             modifier = Modifier
-                .verticalScroll(scrollState)
+//                .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
-=======
-        Column (modifier = Modifier){
->>>>>>> c718a34 (rebase joao)
             CustomComponent()
         }
     }
@@ -115,7 +77,6 @@ fun ProfileScreen(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
 fun ProfileScreenPreview(){
     PrimeiroProjetoTheme {
         ProfileScreen({}, {})
-        //ContainerCursos()
     }
 }
 
@@ -125,14 +86,9 @@ fun ProfileScreenTopAppBar() {
     Box (
         modifier = Modifier
             .fillMaxWidth()
-<<<<<<< HEAD
             .background(greenPrimary)
             .systemBarsPadding()
 
-=======
-            .systemBarsPadding()
-            .background(greenPrimary)
->>>>>>> c718a34 (rebase joao)
     ){
         Row(
             modifier = Modifier
@@ -185,54 +141,44 @@ fun ProfileScreenTopAppBar() {
     }
 }
 
+
 @Composable
-fun ProfileScreenBottomBar(){
+fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
+    val loginViewModel = viewModel<ViewModelSheet>()
+    if (loginViewModel.sheet.value) {
+        BottomSheet {
+            loginViewModel.sheet.value = false
+        }
+    }
+    fun asd(){loginViewModel.sheet.value = true}
     BottomAppBar (
         modifier = Modifier
             .fillMaxWidth()
-            .border(width = 2.dp, color = inputBorderColor),
+            .border(width = 2.dp, color = Color.White),
         containerColor = Color.White
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .height(40.dp)
+                .padding(15.dp, 0.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ProfileCircularBottomButton(greenPrimary)
-            repeat(4){
-                ProfileCircularBottomButton(inputBorderColor)
-            } //pode usar isso para repetir algo varias vezes
+            CircularBottomButton(Color.Gray, onScreenCurso)
+            CircularBottomButton(Color.Gray) { asd() }
+            CircularBottomButton(Color.Gray, onScreenChat)
+            CircularBottomButton(Color.Green) {}
         }
-    }
-}
-
-@Composable
-fun ProfileCircularBottomButton(color: Color){
-    Button(
-        onClick = {/*TODO*/},
-        modifier = Modifier
-            .size(50.dp),
-        shape = CircleShape,
-        colors = ButtonDefaults.buttonColors(containerColor = color)
-    ){
-        /* Pode adicionar text no button por aqui*/
     }
 }
 
 
 @Composable
 fun CustomComponent() {
-<<<<<<< HEAD
     val viewModelProfile = viewModel<ViewModelProfile>()
     val selectedIndex by viewModelProfile.selectedIndex
 
-=======
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
->>>>>>> c718a34 (rebase joao)
 
     Column (
         modifier = Modifier
@@ -284,37 +230,20 @@ fun CustomComponent() {
                 .fillMaxWidth()
         )
         //switch button
-<<<<<<< HEAD
         DoubleSwitchButton(
             selectedIndex = selectedIndex,
             onSelectedIndexChange = viewModelProfile::setSelectedIndex
         )
-
-        if(selectedIndex == 0){
-            ContainerCursos()
-            ContainerCursos()
-            ContainerCursos()
-
-        }else{
-            PostProfile()
-            PostProfile()
-            PostProfile()
-=======
-        DoubleSwitchButton(selectedIndex){
-                newIndex -> selectedIndex = newIndex
-        }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
+        Column(
+            Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()
         ) {
-            items(3){
-                if(selectedIndex == 0){
-                    ContainerCursos({})
-                }else{
-                    PostProfile()
-                }
+            if(selectedIndex == 0){
+                ContainerCursos({})
+                ContainerCursos({})
+            }else{
+                PostProfile()
+                PostProfile()
             }
->>>>>>> c718a34 (rebase joao)
         }
     }
 }
@@ -336,33 +265,21 @@ fun PostProfile(){
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-<<<<<<< HEAD
             text = "Test title",
-=======
-            text = stringResource(id = R.string.classes_screen_class_title),
->>>>>>> c718a34 (rebase joao)
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-<<<<<<< HEAD
             text = "test description",
-=======
-            text = stringResource(id = R.string.classes_screen_class_description),
->>>>>>> c718a34 (rebase joao)
             color = Color.Black,
             fontFamily = FontFamily(Font(R.font.inter_medium)),
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-<<<<<<< HEAD
             text = "43m ago",
-=======
-            text = stringResource(id = R.string.classes_screen_class_time),
->>>>>>> c718a34 (rebase joao)
             color = grayPrimary,
             fontFamily = FontFamily(Font(R.font.inter_semibold)),
             fontSize = 14.sp
@@ -370,17 +287,11 @@ fun PostProfile(){
     }
 }
 
-<<<<<<< HEAD
 @Composable
 fun DoubleSwitchButton(
     selectedIndex: Int,
     onSelectedIndexChange: (Int) -> Unit){
 
-=======
-//TENTATIVAS DE SWITCH TODO: REMOVE RIPPLE EFFECTS FROM BUTTONS
-@Composable
-fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit){
->>>>>>> c718a34 (rebase joao)
     Row(
         modifier = Modifier
             .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
@@ -416,14 +327,9 @@ fun DoubleSwitchButton(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
     }
 }
 
-<<<<<<< HEAD
 // CURSOS PARTE
 @Composable
-<<<<<<< HEAD
 fun ContainerCursos(){
-=======
-fun ContainerCursosPro(){
->>>>>>> c718a34 (rebase joao)
     val nameCursos = arrayOf("Java", "kotlin", "Python", "Go")
     Column(
         Modifier.fillMaxWidth()
@@ -464,39 +370,6 @@ fun CardCursos(nameCurso: String){
             }
             Text(text = "Pellentesque eget urna sit amet lacus rutrum placerat ac vel mi.", fontFamily = interMedium, fontSize = 14.sp)
 //          HorizontalDivider(color = Color.Blue, thickness = 2.dp)
-        }
-    }
-}
-=======
->>>>>>> babb29e (fix bug)
-
-@Composable
-fun ClassesScreenBottomBarProfile(onScreenCurso: () -> Unit, onScreenChat: () -> Unit){
-    val loginViewModel = viewModel<ViewModelSheet>()
-    if (loginViewModel.sheet.value) {
-        BottomSheet {
-            loginViewModel.sheet.value = false
-        }
-    }
-    fun asd(){loginViewModel.sheet.value = true}
-    BottomAppBar (
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(width = 2.dp, color = Color.White),
-        containerColor = Color.White
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .padding(15.dp, 0.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CircularBottomButton(Color.Gray, onScreenCurso)
-            CircularBottomButton(Color.Gray) { asd() }
-            CircularBottomButton(Color.Gray, onScreenChat)
-            CircularBottomButton(Color.Green) {}
         }
     }
 }

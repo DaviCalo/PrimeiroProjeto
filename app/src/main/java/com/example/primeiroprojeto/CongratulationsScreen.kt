@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun CongratulationsScreen(){
+fun CongratulationsScreen(onScreenCurso: () -> Unit){
     Scaffold {
         Column(
             modifier = Modifier
@@ -37,13 +37,13 @@ fun CongratulationsScreen(){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Message()
+            Message(onScreenCurso)
         }
     }
 }
 
 @Composable
-fun Message(){
+fun Message(onScreenCurso: () -> Unit){
     Column(
         Modifier
             .size(350.dp)
@@ -53,7 +53,7 @@ fun Message(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageText()
-        MessageButtons()
+        MessageButtons(onScreenCurso)
     }
 }
 
@@ -72,14 +72,14 @@ fun MessageText(){
 }
 
 @Composable
-fun  MessageButtons(){
+fun  MessageButtons(onScreenCurso: () -> Unit){
     val interSemiBlod = FontFamily(Font(R.font.inter_semibold, FontWeight.SemiBold))
     Column(
         Modifier.padding(25.dp, 10.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = { onScreenCurso() },
             Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -103,5 +103,5 @@ fun  MessageButtons(){
 @Preview(showSystemUi = true)
 @Composable
 fun Previer(){
-    CongratulationsScreen()
+    CongratulationsScreen({})
 }
