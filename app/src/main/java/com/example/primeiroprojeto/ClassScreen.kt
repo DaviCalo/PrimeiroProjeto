@@ -1,4 +1,3 @@
-
 package com.example.primeiroprojeto
 
 import ViewModelClass
@@ -55,14 +54,14 @@ import com.example.primeiroprojeto.ui.theme.inputBorderColor
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ClassesScreen(onScreenChat: () -> Unit, onScreenProfile: () -> Unit, onScreenConclude: () -> Unit ){
+fun ClassesScreen( onScreenChat: () -> Unit, onScreenProfile: () -> Unit, onScreenConclude: () -> Unit){
     val scrollState = rememberScrollState()
     val viewModel: ViewModelClass = viewModel()
     val checkboxStates = viewModel.checkedClassBox.observeAsState(initial = emptyMap<Int, Boolean>())
     val allChecked = viewModel.areAllCkeckBoxesChecked()
     Scaffold(
         topBar = { ClassesScreenTopAppBar() },
-        bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile)},
+        bottomBar = { ClassesScreenBottomBarCursos(onScreenChat, onScreenProfile) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -158,6 +157,43 @@ fun ClassesScreenTopAppBar() {
     }
 }
 
+@Composable
+fun ClassesScreenBottomBar(){
+    BottomAppBar (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(width = 2.dp, color = inputBorderColor),
+        containerColor = Color.White
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularBottomButton(greenPrimary)
+            repeat(4){
+                CircularBottomButton(inputBorderColor)
+            } //pode usar isso para repetir algo varias vezes
+
+
+        }
+    }
+}
+
+@Composable
+fun CircularBottomButton(color: Color){
+    Button(
+        onClick = {/*TODO*/},
+        modifier = Modifier
+            .size(50.dp),
+        shape = CircleShape,
+        colors = ButtonDefaults.buttonColors(containerColor = color)
+    ){
+        /* Pode adicionar text no button por aqui*/
+    }
+}
 
 //POSTS TODO: viewModel das check box e adicionar o botao final de conclusao do curso
 @Composable

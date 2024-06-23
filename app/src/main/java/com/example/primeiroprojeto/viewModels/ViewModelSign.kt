@@ -64,7 +64,7 @@ class ViewModelSign: ViewModel() {
         val currentEmail = _inputStringEmail.value
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\\\.+[a-z]+"
         _isEmailValid.value = currentEmail.matches(Regex(emailPattern))
-            onScreenCurso()
+        onScreenCurso()
     }
 
     fun inputStringSignal(){

@@ -17,6 +17,7 @@ foundationAndroid = "1.6.8"
 composeMaterial = "1.3.1"
 runtimeLivedata = "1.6.8"
 runtimeLivedataVersion = "1.6.8"
+androidxRuntimeLivedata = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,7 +39,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedataVersion" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "androidxRuntimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
